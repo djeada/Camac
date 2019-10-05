@@ -14,12 +14,8 @@ for x in range(len(rozmiar)):
         suma += 1
     lista.append((rozmiar[x],time.time() - start_time))
 
-
 dane_x = [x[0] for x in lista]
 dane_y = [x[1] for x in lista]
-
-for y in dane_y:
-    print(y)
 
 f = inter.interp1d(dane_x, dane_y,fill_value="extrapolate")
 x = numpy.linspace(0,70796500)
