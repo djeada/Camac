@@ -46,6 +46,22 @@ def znajdzMax(tablica):
             indeks = i
     return indeks
 
+
+def kopcuj(tablica, n, i):
+    maksimum = i
+    l = 2 * i + 1
+    r = 2 * i + 2 
+ 
+    if l < n and tablica[i] < tablica[l]:
+        maksimum = l
+ 
+    if r < n and tablica[maksimum] < tablica[r]:
+        maksimum = r
+ 
+    if maksimum] != i:
+        swap(i, maksimum, tablica)
+        kopcuj(tablica, n,maksimum)
+
 def sortowanie_babelkowe(tablica, szerokosci, window):
     for i in range(len(tablica)):
         for j in range(len(tablica)):
@@ -85,19 +101,14 @@ def sortowanie_zliczanie(tablica, szerokosci, window):
             winsound.Beep(random.randint(0,100) + 2000,10)
 
 def sortowanie_kopcowanie(tablica, szerokosci, window):
-    maksimum = tablica[znajdzMax(tablica)]+1
-    licznik = [0]*maksimum           
-    
-    for x in tablica:
-        licznik[x] += 1             
-
-    i = 0
-    for x in range(maksimum):            
-        for y in range(licznik[x]):  
-            tablica[i] = x
-            i += 1
-            draw(tablica, szerokosci, window)
-            winsound.Beep(random.randint(0,100) + 2000,10)
+    dlugosc = len(tablica)
+    for i in range(dlugosc, 0, -1):
+        kopcuj(tablica, dlugosc, i)
+    for i in range(dlugosc-1, 0, -1):
+        swap(i, 0, tablica)
+        kopcuj(tablica, i, 0)
+        draw(tablica, szerokosci, window)
+        winsound.Beep(i + 2000,10)
             
 def wypisz_slownik(slownik):
     for key in slownik:
@@ -113,7 +124,6 @@ for i in range(500):
     tab.append(losowa)
     szerokosci.append(szerokosc)
     szerokosc += 2.8
-
 
 def menu(tab, szerokosci, czas):
     while True:
@@ -153,6 +163,13 @@ def menu(tab, szerokosci, czas):
             start_time = time.time()
             sortowanie_zliczanie(temp, szerokosci, window)
             czas["zliczanie"] = time.time() - start_time
+            pygame.display.quit()
+        if(wybor == 5):
+            temp = list(tab)
+            window = setup()
+            start_time = time.time()
+            sortowanie_kopcowanie(temp, szerokosci, window)
+            czas["kopcowanie"] = time.time() - start_time
             pygame.display.quit()
         if(wybor == 7):
             wypisz_slownik(czas)
