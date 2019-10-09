@@ -1,8 +1,20 @@
 import random
 import time
 import pygame
-import winsound
 from pygame.locals import *
+
+try:
+    import winsound
+except ImportError:
+    import os
+    def playsound(frequency,duration):
+        #apt-get install beep
+        os.system('beep -f %s -l %s' % (frequency,duration))
+else:
+    def playsound(frequency,duration):
+        winsound.Beep(frequency,duration)
+
+
 
 def setup():
     pygame.init()
@@ -58,7 +70,7 @@ def kopcuj(tablica, n, i):
     if r < n and tablica[maksimum] < tablica[r]:
         maksimum = r
  
-    if maksimum] != i:
+    if maksimum != i:
         swap(i, maksimum, tablica)
         kopcuj(tablica, n,maksimum)
 
@@ -67,7 +79,7 @@ def sortowanie_babelkowe(tablica, szerokosci, window):
         for j in range(len(tablica)):
             if tablica[i] < tablica[j]:
                 swap(i, j, tablica)
-                winsound.Beep(tablica[j] + 2000,10)
+                playsound(tablica[j] + 2000,10)
             draw(tablica, szerokosci, window)
 
 def sortowanie_wybieranie(tablica, szerokosci, window):
@@ -75,12 +87,12 @@ def sortowanie_wybieranie(tablica, szerokosci, window):
         indeks = znajdzMin(tablica[i:len(tablica)]) + i
         swap(i,indeks,tablica)
         draw(tablica, szerokosci, window)
-        winsound.Beep(tablica[i] + 2000,10)
+        playsound(tablica[i] + 2000,10)
 
 def sortowanie_szybkie(tablica, szerokosci, window):
     if len(tablica) > 1:
         draw(tablica, szerokosci, window)
-        winsound.Beep(random.randint(0,100) + 2000,10)    
+        playsound(random.randint(0,100) + 2000,10)    
         return sortowanie_szybkie([x for x in tablica[1:] if x < tablica[0]], szerokosci, window) + [x for x in tablica if x == tablica[0]] + sortowanie_szybkie([x for x in tablica[1:] if x > tablica[0]], szerokosci, window)
     else:
         return tablica
@@ -98,7 +110,7 @@ def sortowanie_zliczanie(tablica, szerokosci, window):
             tablica[i] = x
             i += 1
             draw(tablica, szerokosci, window)
-            winsound.Beep(random.randint(0,100) + 2000,10)
+            playsound(random.randint(0,100) + 2000,10)
 
 def sortowanie_kopcowanie(tablica, szerokosci, window):
     dlugosc = len(tablica)
@@ -108,7 +120,7 @@ def sortowanie_kopcowanie(tablica, szerokosci, window):
         swap(i, 0, tablica)
         kopcuj(tablica, i, 0)
         draw(tablica, szerokosci, window)
-        winsound.Beep(i + 2000,10)
+        playsound(i + 2000,10)
             
 def wypisz_slownik(slownik):
     for key in slownik:
