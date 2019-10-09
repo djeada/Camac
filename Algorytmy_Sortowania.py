@@ -58,7 +58,7 @@ def kopcuj(tablica, n, i):
     if r < n and tablica[maksimum] < tablica[r]:
         maksimum = r
  
-    if maksimum] != i:
+    if maksimum != i:
         swap(i, maksimum, tablica)
         kopcuj(tablica, n,maksimum)
 
