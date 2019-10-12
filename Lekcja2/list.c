@@ -57,7 +57,6 @@ int dlugosc_obiektowy()
 {
 	dlugosc_lista(lista);
 }
-//Koniec shizy Maxwella
 
 struct Pudelko* init_pudelko(const char* nazwa, int strony)
 {
@@ -67,7 +66,7 @@ struct Pudelko* init_pudelko(const char* nazwa, int strony)
 		perror("Alkoacja pamięci się nie powiodła\n");
 		exit(-1);
 	}
-	strncpy(lista->ksiazka, nazwa, 32);
+	strncpy(lista->ksiazka, nazwa, 64);
 	lista->liczba_stron = strony;
 	lista->next = NULL;
 
@@ -99,19 +98,19 @@ void dodaj_pudelko(struct Pudelko* poczatek, const char* nazwa, int strony)
 		exit(-1);
 	}
 
-	strncpy(ptr->next->ksiazka, nazwa, 32);
+	strncpy(ptr->next->ksiazka, nazwa, 64);
 	ptr->next->liczba_stron = strony;
 	ptr->next->next = NULL;
 	
 	//Dodanie obiektowosci:
 	ptr->ja = ptr;
-	lista->ja = lista;
-	lista->dodaj = dodaj_obiektowy;
-	lista->usun = usun_obiektowy;
-	lista->usun_wszystko = usun_wszystko_obiektowy;
-	lista->wypisz = wypisz_obiektowy;
-	lista->wypisz_wszystko = wypisz_wszystko_obiektowy;
-	lista->dlugosc = dlugosc_obiektowy;
+	ptr->next->ja = lista;
+	ptr->next->dodaj = dodaj_obiektowy;
+	ptr->next->usun = usun_obiektowy;
+	ptr->next->usun_wszystko = usun_wszystko_obiektowy;
+	ptr->next->wypisz = wypisz_obiektowy;
+	ptr->next->wypisz_wszystko = wypisz_wszystko_obiektowy;
+	ptr->next->dlugosc = dlugosc_obiektowy;
 }
 
 
@@ -179,6 +178,46 @@ void wypisz_liste(struct Pudelko* poczatek)
 	}
 }
 
+int wstaw(struct Pudelko* poczatek, int num, const char* ksiazka, int strony)
+{
+	struct Pudelko* ptr = poczatek;
+	struct Pudelko* ptr_old = poczatek;
+	
+	int i = 1;
+
+	if(num > dlugosc_lista(ptr) || num <= 0)
+	{
+		perror("Operacja wstawienia jest niemożliwa\n");
+		return -1;
+	}
+
+	while(i < num)
+	{
+		ptr = ptr->next;
+		i++;
+	}
+
+	ptr_old = ptr->next;
+	ptr->next = (struct Pudelko*) malloc(sizeof(struct Pudelko));
+	ptr->next->next = ptr_old;
+
+	strncpy(ptr->next->ksiazka, ksiazka, 64);
+	ptr->next->liczba_stron = strony;
+
+	//Obiektowe bajery:
+	ptr->ja = ptr;
+	ptr->next->ja = lista;
+	ptr->next->dodaj = dodaj_obiektowy;
+	ptr->next->usun = usun_obiektowy;
+	ptr->next->usun_wszystko = usun_wszystko_obiektowy;
+	ptr->next->wypisz = wypisz_obiektowy;
+	ptr->next->wypisz_wszystko = wypisz_wszystko_obiektowy;
+	ptr->next->dlugosc = dlugosc_obiektowy;
+	return 0;	
+}
+
+
+
 int main(void)
 {
 	lista = init_pudelko("Dziady\0", 300);
@@ -188,8 +227,9 @@ int main(void)
 
 	printf("Dlugosc listy: %d\n", lista->dlugosc());
 
+	//lista->wypisz_wszystko();
+	wstaw(lista, 1, "Nalepioki", 12);
 	lista->wypisz_wszystko();
-
 	lista->usun_wszystko();
 
 	return 0;
