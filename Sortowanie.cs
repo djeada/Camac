@@ -33,7 +33,6 @@ class Sortowanie
         }
         return a;
     }
-
     public static int[] Selection(int[] a)
     {
         int min;
