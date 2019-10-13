@@ -76,6 +76,7 @@ class Lista():
                     return
                 pozycja += 1
             licznik.nastepny = None
+    
     def pobierz(self, i):
         if self.glowa.dane == None:
             print('lista jest pusta!')
@@ -148,7 +149,6 @@ class Lista():
             a, b = self.podziel()
             return scal(a.sortuj_przez_scalanie(x), b.sortuj_przez_scalanie(x), x)
  
-
 def scal(a,b,x):
     pozycja_a = pozycja_b = 0
 
