@@ -33,9 +33,11 @@ void swap(int* a, int* b){
 void szybkie(int tab[], int lewy, int prawy) {
 	if (lewy < prawy) {
 		int srodek = lewy;
-		for (int i = lewy + 1; i <= prawy; i++)
-			if (tab[i] < tab[lewy])
+		for (int i = lewy + 1; i <= prawy; i++){
+			if (tab[i] < tab[lewy]){
 				swap(tab[++srodek], tab[i]);
+			}
+		}
 		swap(tab[lewy], tab[srodek]);
 		szybkie(tab, lewy, srodek - 1);
 		szybkie(tab, srodek + 1, prawy);
@@ -43,7 +45,8 @@ void szybkie(int tab[], int lewy, int prawy) {
 }
 
 void wypisz(int tab[], int dlugosc) {
-	for (int i = 0; i < dlugosc; i++)
+	for (int i = 0; i < dlugosc; i++){
 		cout << tab[i] << " ";
+	}
 	cout << endl;
 }
