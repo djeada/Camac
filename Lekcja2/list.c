@@ -3,14 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Pudelko{
-	char ksiazka[64];
+
+struct Lista{
+	char ksiazka[64]; //W przyszlosci należy zmienić na void* i size_t albo coś innego
 	int liczba_stron;
 
-	struct Pudelko* next;
+	struct Lista* next;
 
 	//Lubicie programowanie obiektowe? Po co to komu:
-	struct Pudelko* ja;
+	struct Lista* ja;
 	void (*dodaj)(const char*, int);
 	int (*wstaw)(int, const char*, int);
 	void (*usun)();
@@ -21,29 +22,29 @@ struct Pudelko{
 	int (*dlugosc)();
 }* lista;
 
-void dodaj_pudelko(struct Pudelko* poczatek, const char* nazwa, int strony);
-int wstaw_pudelko(struct Pudelko* poczatek, int num, const char* ksiazka, int strony);
-int usun_pudelko(struct Pudelko* poczatek);
-int usun_pudelko_index(struct Pudelko* poczatek, int miejsce);
-int dlugosc_lista(struct Pudelko* poczatek);
-void usun_liste(struct Pudelko* poczatek);
-void wypisz_pudelko(struct Pudelko* ptr);
-void wypisz_liste(struct Pudelko* poczatek);
+void dodaj_element(struct Lista* poczatek, const char* nazwa, int strony);
+int wstaw_element(struct Lista* poczatek, int num, const char* ksiazka, int strony);
+int usun_element(struct Lista* poczatek);
+int usun_element_index(struct Lista* poczatek, int miejsce);
+int dlugosc_lista(struct Lista* poczatek);
+void usun_liste(struct Lista* poczatek);
+void wypisz_element(struct Lista* ptr);
+void wypisz_liste(struct Lista* poczatek);
 
 //Pozorowanie obiektowości:
 void dodaj_obiektowy(const char* nazwa, int str)
 {
-	dodaj_pudelko(lista, nazwa, str);
+	dodaj_element(lista, nazwa, str);
 }
 
 int wstaw_obiektowy(int num, const char* ksiazka, int strony)
 {
-	wstaw_pudelko(lista, num, ksiazka, strony);
+	wstaw_element(lista, num, ksiazka, strony);
 }
 
 void usun_obiektowy()
 {
-	usun_pudelko(lista);
+	usun_element(lista);
 }
 
 void usun_wszystko_obiektowy()
@@ -53,13 +54,13 @@ void usun_wszystko_obiektowy()
 
 int usun_index_obiektowy(int num)
 {
-	usun_pudelko_index(lista, num);
+	usun_element_index(lista, num);
 }
 
 void wypisz_obiektowy()
 {
 	
-	wypisz_pudelko(lista);
+	wypisz_element(lista);
 }
 
 void wypisz_wszystko_obiektowy()
@@ -72,9 +73,9 @@ int dlugosc_obiektowy()
 	dlugosc_lista(lista);
 }
 
-struct Pudelko* init_pudelko(const char* nazwa, int strony)
+struct Lista* init_element(const char* nazwa, int strony)
 {
-	struct Pudelko* lista = (struct Pudelko*) malloc(sizeof(struct Pudelko));
+	struct Lista* lista = (struct Lista*) malloc(sizeof(struct Lista));
 	if(lista == NULL)
 	{
 		perror("Alkoacja pamięci się nie powiodła\n");
@@ -97,16 +98,16 @@ struct Pudelko* init_pudelko(const char* nazwa, int strony)
 	return lista;			
 }
 
-void dodaj_pudelko(struct Pudelko* poczatek, const char* nazwa, int strony)
+void dodaj_element(struct Lista* poczatek, const char* nazwa, int strony)
 {
-	struct Pudelko* ptr = poczatek;
+	struct Lista* ptr = poczatek;
 
 	while(ptr->next != NULL)
 	{
 		ptr = ptr->next;
 	}
 
-	ptr->next = (struct Pudelko*) malloc(sizeof(struct Pudelko)); 
+	ptr->next = (struct Lista*) malloc(sizeof(struct Lista)); 
 	
 	if(ptr == NULL)
 	{
@@ -132,12 +133,12 @@ void dodaj_pudelko(struct Pudelko* poczatek, const char* nazwa, int strony)
 }
 
 
-int usun_pudelko(struct Pudelko* poczatek)
+int usun_element(struct Lista* poczatek)
 {
 	if(poczatek != NULL)
 	{
-		struct Pudelko* ptr = poczatek;
-		struct Pudelko* ptr_prev = poczatek;
+		struct Lista* ptr = poczatek;
+		struct Lista* ptr_prev = poczatek;
 
 		while(ptr->next != NULL)
 		{
@@ -160,10 +161,10 @@ int usun_pudelko(struct Pudelko* poczatek)
 	return 0;
 }
 
-int dlugosc_lista(struct Pudelko* poczatek)
+int dlugosc_lista(struct Lista* poczatek)
 {
 	int d = 1;
-	struct Pudelko* ptr = poczatek;
+	struct Lista* ptr = poczatek;
 
 	while(ptr->next != NULL)
 	{
@@ -174,32 +175,32 @@ int dlugosc_lista(struct Pudelko* poczatek)
 	return d;
 }
 
-void usun_liste(struct Pudelko* poczatek)
+void usun_liste(struct Lista* poczatek)
 {
-	while(!usun_pudelko(poczatek)){};	
+	while(!usun_element(poczatek)){};	
 }
 
-void wypisz_pudelko(struct Pudelko* ptr)
+void wypisz_element(struct Lista* ptr)
 {
 	printf("Tytuł: %s\tLiczba stron: %d\n", ptr->ksiazka, ptr->liczba_stron);
 }
 
-void wypisz_liste(struct Pudelko* poczatek)
+void wypisz_liste(struct Lista* poczatek)
 {
-	struct Pudelko* ptr = poczatek;
-	wypisz_pudelko(ptr);
+	struct Lista* ptr = poczatek;
+	wypisz_element(ptr);
 
 	while(ptr->next != NULL)
 	{
-		wypisz_pudelko(ptr->next);
+		wypisz_element(ptr->next);
 		ptr = ptr->next;
 	}
 }
 
-int wstaw_pudelko(struct Pudelko* poczatek, int num, const char* ksiazka, int strony)
+int wstaw_element(struct Lista* poczatek, int num, const char* ksiazka, int strony)
 {
-	struct Pudelko* ptr = poczatek;
-	struct Pudelko* ptr_old = poczatek;
+	struct Lista* ptr = poczatek;
+	struct Lista* ptr_old = poczatek;
 	
 	int i = 1;
 
@@ -216,7 +217,7 @@ int wstaw_pudelko(struct Pudelko* poczatek, int num, const char* ksiazka, int st
 	}
 
 	ptr_old = ptr->next;
-	ptr->next = (struct Pudelko*) malloc(sizeof(struct Pudelko));
+	ptr->next = (struct Lista*) malloc(sizeof(struct Lista));
 	ptr->next->next = ptr_old;
 
 	strncpy(ptr->next->ksiazka, ksiazka, 64);
@@ -236,10 +237,10 @@ int wstaw_pudelko(struct Pudelko* poczatek, int num, const char* ksiazka, int st
 	return 0;	
 }
 
-int usun_pudelko_index(struct Pudelko* poczatek, int miejsce)
+int usun_element_index(struct Lista* poczatek, int miejsce)
 {
-	struct Pudelko* ptr = poczatek;
-	struct Pudelko* ptr_prev;
+	struct Lista* ptr = poczatek;
+	struct Lista* ptr_prev;
 	int i=0;
 	if(miejsce > dlugosc_lista(ptr) || miejsce <= 0)
 	{
@@ -259,9 +260,24 @@ int usun_pudelko_index(struct Pudelko* poczatek, int miejsce)
 	return 0;
 }
 
+struct Lista* podzel(struct Lista* poczatek, float stosunek)
+{
+	struct Lista* ptr = poczatek;
+	struct Lista* druga;
+
+	int dlugosc = dlugosc_lista(ptr);
+	int dlugosc_pierwsza = stosunek * dlugosc;
+	int dlugosc_druga = dlugosc - dlugosc_pierwsza;
+
+	
+	//Dopisac!	
+	
+	return druga;
+}
+
 int main(void)
 {
-	lista = init_pudelko("Dziady\0", 300);
+	lista = init_element("Dziady\0", 300);
 	lista->dodaj("Kordian\0", 50);
 	lista->dodaj("Przepisy babuni\0", 111);
 	lista->dodaj("W jakim języku nie programować\0", 57);
