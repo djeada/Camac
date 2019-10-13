@@ -11,16 +11,20 @@ struct Pudelko{
 
 	//Lubicie programowanie obiektowe? Po co to komu:
 	struct Pudelko* ja;
-	void (*dodaj)( const char*, int);
+	void (*dodaj)(const char*, int);
+	int (*wstaw)(int, const char*, int);
 	void (*usun)();
 	void (*usun_wszystko)();
+	int (*usun_index)(int);
 	void (*wypisz)();
 	void (*wypisz_wszystko)();
 	int (*dlugosc)();
 }* lista;
 
 void dodaj_pudelko(struct Pudelko* poczatek, const char* nazwa, int strony);
+int wstaw_pudelko(struct Pudelko* poczatek, int num, const char* ksiazka, int strony);
 int usun_pudelko(struct Pudelko* poczatek);
+int usun_pudelko_index(struct Pudelko* poczatek, int miejsce);
 int dlugosc_lista(struct Pudelko* poczatek);
 void usun_liste(struct Pudelko* poczatek);
 void wypisz_pudelko(struct Pudelko* ptr);
@@ -32,6 +36,11 @@ void dodaj_obiektowy(const char* nazwa, int str)
 	dodaj_pudelko(lista, nazwa, str);
 }
 
+int wstaw_obiektowy(int num, const char* ksiazka, int strony)
+{
+	wstaw_pudelko(lista, num, ksiazka, strony);
+}
+
 void usun_obiektowy()
 {
 	usun_pudelko(lista);
@@ -40,6 +49,11 @@ void usun_obiektowy()
 void usun_wszystko_obiektowy()
 {
 	usun_liste(lista);
+}
+
+int usun_index_obiektowy(int num)
+{
+	usun_pudelko_index(lista, num);
 }
 
 void wypisz_obiektowy()
@@ -73,7 +87,9 @@ struct Pudelko* init_pudelko(const char* nazwa, int strony)
 	//Inicjalizacja obiektowosci:
 	lista->ja = lista;
 	lista->dodaj = dodaj_obiektowy;
+	lista->wstaw = wstaw_obiektowy;
 	lista->usun = usun_obiektowy;
+	lista->usun_index = usun_index_obiektowy;
 	lista->usun_wszystko = usun_wszystko_obiektowy;
 	lista->wypisz = wypisz_obiektowy;
 	lista->wypisz_wszystko = wypisz_wszystko_obiektowy;
@@ -106,7 +122,9 @@ void dodaj_pudelko(struct Pudelko* poczatek, const char* nazwa, int strony)
 	ptr->ja = ptr;
 	ptr->next->ja = lista;
 	ptr->next->dodaj = dodaj_obiektowy;
+	ptr->next->wstaw = wstaw_obiektowy;
 	ptr->next->usun = usun_obiektowy;
+	ptr->next->usun_index = usun_index_obiektowy;
 	ptr->next->usun_wszystko = usun_wszystko_obiektowy;
 	ptr->next->wypisz = wypisz_obiektowy;
 	ptr->next->wypisz_wszystko = wypisz_wszystko_obiektowy;
@@ -178,7 +196,7 @@ void wypisz_liste(struct Pudelko* poczatek)
 	}
 }
 
-int wstaw(struct Pudelko* poczatek, int num, const char* ksiazka, int strony)
+int wstaw_pudelko(struct Pudelko* poczatek, int num, const char* ksiazka, int strony)
 {
 	struct Pudelko* ptr = poczatek;
 	struct Pudelko* ptr_old = poczatek;
@@ -208,7 +226,9 @@ int wstaw(struct Pudelko* poczatek, int num, const char* ksiazka, int strony)
 	ptr->ja = ptr;
 	ptr->next->ja = lista;
 	ptr->next->dodaj = dodaj_obiektowy;
+	ptr->next->wstaw = wstaw_obiektowy;
 	ptr->next->usun = usun_obiektowy;
+	ptr->next->usun_index = usun_index_obiektowy;
 	ptr->next->usun_wszystko = usun_wszystko_obiektowy;
 	ptr->next->wypisz = wypisz_obiektowy;
 	ptr->next->wypisz_wszystko = wypisz_wszystko_obiektowy;
@@ -216,7 +236,28 @@ int wstaw(struct Pudelko* poczatek, int num, const char* ksiazka, int strony)
 	return 0;	
 }
 
+int usun_pudelko_index(struct Pudelko* poczatek, int miejsce)
+{
+	struct Pudelko* ptr = poczatek;
+	struct Pudelko* ptr_prev;
+	int i=0;
+	if(miejsce > dlugosc_lista(ptr) || miejsce <= 0)
+	{
+		perror("Operacja wstawienia jest niemożliwa\n");
+		return -1;
+	}
 
+	while(i < miejsce)
+	{
+		ptr_prev = ptr;
+		ptr = ptr->next;
+		i++;
+	}
+	
+	ptr_prev->next = ptr->next;
+	free(ptr);
+	return 0;
+}
 
 int main(void)
 {
@@ -227,8 +268,12 @@ int main(void)
 
 	printf("Dlugosc listy: %d\n", lista->dlugosc());
 
-	//lista->wypisz_wszystko();
-	wstaw(lista, 1, "Nalepioki", 12);
+	lista->wypisz_wszystko();
+	lista->wstaw(1, "Nalepioki", 12);
+	printf("#######Druga operacja#######\n");
+	lista->wypisz_wszystko();
+	lista->usun_index(1);
+	printf("#######Trzecia operacja#####\n");
 	lista->wypisz_wszystko();
 	lista->usun_wszystko();
 
