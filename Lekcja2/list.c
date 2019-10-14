@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_LISTS 32
 
 struct Lista{
 	char ksiazka[64]; //W przyszlosci należy zmienić na void* i size_t albo coś innego
@@ -11,7 +12,7 @@ struct Lista{
 	struct Lista* next;
 
 	//Lubicie programowanie obiektowe? Po co to komu:
-	struct Lista* ja;
+	int ID;
 	void (*dodaj)(const char*, int);
 	int (*wstaw)(int, const char*, int);
 	void (*usun)();
@@ -20,7 +21,9 @@ struct Lista{
 	void (*wypisz)();
 	void (*wypisz_wszystko)();
 	int (*dlugosc)();
-}* lista;
+} *lista;
+
+struct Lista* lists_poiters_table[MAX_LISTS];
 
 void dodaj_element(struct Lista* poczatek, const char* nazwa, int strony);
 int wstaw_element(struct Lista* poczatek, int num, const char* ksiazka, int strony);
@@ -86,7 +89,9 @@ struct Lista* init_element(const char* nazwa, int strony)
 	lista->next = NULL;
 
 	//Inicjalizacja obiektowosci:
-	lista->ja = lista;
+	static int id=0;
+	lista->ID = id++;
+
 	lista->dodaj = dodaj_obiektowy;
 	lista->wstaw = wstaw_obiektowy;
 	lista->usun = usun_obiektowy;
@@ -120,8 +125,6 @@ void dodaj_element(struct Lista* poczatek, const char* nazwa, int strony)
 	ptr->next->next = NULL;
 	
 	//Dodanie obiektowosci:
-	ptr->ja = ptr;
-	ptr->next->ja = lista;
 	ptr->next->dodaj = dodaj_obiektowy;
 	ptr->next->wstaw = wstaw_obiektowy;
 	ptr->next->usun = usun_obiektowy;
@@ -224,8 +227,6 @@ int wstaw_element(struct Lista* poczatek, int num, const char* ksiazka, int stro
 	ptr->next->liczba_stron = strony;
 
 	//Obiektowe bajery:
-	ptr->ja = ptr;
-	ptr->next->ja = lista;
 	ptr->next->dodaj = dodaj_obiektowy;
 	ptr->next->wstaw = wstaw_obiektowy;
 	ptr->next->usun = usun_obiektowy;
@@ -293,5 +294,18 @@ int main(void)
 	lista->wypisz_wszystko();
 	lista->usun_wszystko();
 
+	//Druga lista bez obiektowosci (po ludzku):
+	printf("#######Podejscie normalne###\n");
+	struct Lista* druga = init_element("Czy to już upośledzenie czy jeszcze geniusz?", 12);
+	dodaj_element(druga, "Nie wiem - cytaty wielkich polaków", 112);
+	dodaj_element(druga, "Przepisy na pyszną zupę", 47);
+	dodaj_element(druga, "Depresja - objawy, zapobieganie, leczenie", 413);
+	druga->wypisz_wszystko();
+	druga->usun_wszystko();
+	
+	printf("Powrót do pierwszej\n");
+	//lista->wypisz_wszystko();
+	//lista->usun_wszystko();
+	
 	return 0;
 }
