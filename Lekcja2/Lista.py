@@ -62,21 +62,37 @@ class Lista():
             licznik.nastepny = None
       
     def usun(self, i):
-        if i > self.dlugosc() or i < 0:
-            print('zly indesk')
+       if self.head.dane == None:
+            print('lista jest pusta!')
             return
-        if self.glowa.dane != None:
-            licznik = self.glowa
-            pozycja = 0
-            while licznik.nastepny.nastepny != None:
+        if i >= self.dlugosc() or i < 0:
+            print('zly indeks')
+            return
+        if i == 0:
+            self.head = self.head.nastepny
+            return
+        licznik = self.head
+        pozycja = 0
+        while licznik.nastepny != None:
+            poprzednik = licznik
+            licznik = licznik.nastepny
+            if pozycja+1 == i:
+                poprzednik.nastepny = licznik.nastepny
+                return
+            pozycja += 1
+            
+    def usun_duplikaty(self):
+        poprzednik = None
+        licznik = self.head
+        duplikaty = {}
+        while licznik:
+            if licznik.dane in duplikaty:
+                poprzednik.nastepny = licznik.nastepny
+            else:
+                duplikaty[licznik.dane] = 'xD'
                 poprzednik = licznik
-                licznik = licznik.nastepny
-                if pozycja + 1 == i:
-                    poprzednik.nastepy = licznik.nastepny
-                    return
-                pozycja += 1
-            licznik.nastepny = None
-    
+            licznik = licznik.nastepny
+            
     def pobierz(self, i):
         if self.glowa.dane == None:
             print('lista jest pusta!')
@@ -106,6 +122,21 @@ class Lista():
         if najkrotszy.dane[1] > licznik.dane[1]:
                 najkrotszy = licznik
         return najkrotszy.dane
+
+    def znajdzNajdluzsza(self):
+        if self.glowa.dane == None:
+            print('Lista jest pusta')
+            return
+
+        najdluzszy = self.glowa
+        licznik = self.glowa
+        while licznik.nastepny != None:
+            if najdluzszy.dane[1] > licznik.dane[1]:
+                najdluzszy = licznik
+            licznik = licznik.nastepny
+        if najdluzszy.dane[1] > licznik.dane[1]:
+                najdluzszy = licznik
+        return najdluzszy.dane
 
     def sortuj(self):
         print('Wybierz rodzaj sortowania')
@@ -149,6 +180,7 @@ class Lista():
             a, b = self.podziel()
             return scal(a.sortuj_przez_scalanie(x), b.sortuj_przez_scalanie(x), x)
  
+
 def scal(a,b,x):
     pozycja_a = pozycja_b = 0
 
