@@ -60,18 +60,18 @@ class Lista():
                     return
                 pozycja += 1
             licznik.nastepny = None
-      
+            
     def usun(self, i):
-       if self.head.dane == None:
+        if self.glowa.dane == None:
             print('lista jest pusta!')
             return
         if i >= self.dlugosc() or i < 0:
             print('zly indeks')
             return
         if i == 0:
-            self.head = self.head.nastepny
+            self.glowa = self.glowa.nastepny
             return
-        licznik = self.head
+        licznik = self.glowa
         pozycja = 0
         while licznik.nastepny != None:
             poprzednik = licznik
@@ -83,7 +83,7 @@ class Lista():
             
     def usun_duplikaty(self):
         poprzednik = None
-        licznik = self.head
+        licznik = self.glowa
         duplikaty = {}
         while licznik:
             if licznik.dane in duplikaty:
@@ -179,7 +179,47 @@ class Lista():
         else:
             a, b = self.podziel()
             return scal(a.sortuj_przez_scalanie(x), b.sortuj_przez_scalanie(x), x)
- 
+
+    def czyPalindrom(self):
+        listaA = self.klonuj()
+        self.odwroc()
+        listaB = self.klonuj()
+        self.odwroc()
+        return porownaj(listaA, listaB)
+
+    def klonuj(self):
+        nowa = Lista()
+        licznik = self.glowa
+        while licznik.nastepny != None:
+            nowa.dodaj(licznik.dane)
+            licznik = licznik.nastepny
+        nowa.dodaj(licznik.dane)
+        return nowa
+  
+    def odwroc(self):
+        poprzednik = None
+        licznik = self.glowa
+        while licznik:
+            nastepnik = licznik.nastepny
+            licznik.nastepny = poprzednik
+            poprzednik = licznik
+            licznik = nastepnik
+        self.glowa = poprzednik
+        
+def porownaj(listaA, listaB):
+    temp1 = listaA.glowa
+    temp2 = listaB.glowa
+
+    if (temp1 == None and temp2 == None):
+        return True
+
+    while (temp1 != None and temp2 != None):
+        if (temp1.dane == temp2.dane):
+            temp1 = temp1.nastepny
+            temp2 = temp2.nastepny 
+        else:
+            return False
+    return True
 
 def scal(a,b,x):
     pozycja_a = pozycja_b = 0
@@ -207,13 +247,9 @@ def scal(a,b,x):
                 
     return polaczone_listy
 
-listaA = Lista()
-listaA.dodaj(('Pan Tadeusz', 340))
-listaA.dodaj(('Pan Amadeusz', 843))
-listaA.dodaj(('Pan Maxwell', 143))
-listaA.dodaj(('Pan Tadeusz', 356))
-listaA.usun_ostatni()
-listaA.wstaw(('Hej',33), 1)
-listaA.sortuj().wyswietl()
-print('Najkrotsza ksiazka to ', listaA.znajdzNajkrotsza())
-print(listaA.dlugosc())
+lista = Lista()
+lista.dodaj(('Pan Tadeusz', 340))
+lista.dodaj(('Pan Amadeusz', 843))
+lista.dodaj(('Pan Amadeusz', 843))
+lista.dodaj(('Pan Tadeusz', 340))
+print(lista.czyPalindrom())
