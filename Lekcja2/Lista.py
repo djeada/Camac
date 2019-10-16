@@ -110,8 +110,7 @@ class Lista():
 
     def znajdzNajkrotsza(self):
         if self.glowa.dane == None:
-            print('Lista jest pusta')
-            return
+            return 'Lista jest pusta'
 
         najkrotszy = self.glowa
         licznik = self.glowa
@@ -125,28 +124,17 @@ class Lista():
 
     def znajdzNajdluzsza(self):
         if self.glowa.dane == None:
-            print('Lista jest pusta')
-            return
+            return 'Lista jest pusta'
 
         najdluzszy = self.glowa
         licznik = self.glowa
         while licznik.nastepny != None:
-            if najdluzszy.dane[1] > licznik.dane[1]:
+            if najdluzszy.dane[1] < licznik.dane[1]:
                 najdluzszy = licznik
             licznik = licznik.nastepny
-        if najdluzszy.dane[1] > licznik.dane[1]:
+        if najdluzszy.dane[1] < licznik.dane[1]:
                 najdluzszy = licznik
         return najdluzszy.dane
-
-    def sortuj(self):
-        print('Wybierz rodzaj sortowania')
-        print('1. Alfabetycznie')
-        print('2. Wzgledem ilosci stron')
-        wybor = int(input())
-        if wybor == 1:
-            return self.sortuj_przez_scalanie(0)
-        if wybor == 2:
-            return self.sortuj_przez_scalanie(1)
 
     def podziel(self):
         dlugosc = self.dlugosc()
@@ -247,9 +235,79 @@ def scal(a,b,x):
                 
     return polaczone_listy
 
-lista = Lista()
-lista.dodaj(('Pan Tadeusz', 340))
-lista.dodaj(('Pan Amadeusz', 843))
-lista.dodaj(('Pan Amadeusz', 843))
-lista.dodaj(('Pan Tadeusz', 340))
-print(lista.czyPalindrom())
+def menu(lista):
+    while True:
+        print("1. Dodaj nowa pozycje na koniec listy")
+        print("2. Dodaj nowa pozycje na okreslone miejsce")
+        print("3. Sprawdz dlugosc listy")
+        print("4. Wyswietl liste")
+        print("5. Usun pozycje z listy")
+        print("6. Znajdz najdluzsza ksiazke")
+        print("7. Znajdz najkrotsza ksiazke")
+        print("8. Sortuj liste alfabetycznie")
+        print("9. Sortuj liste po ilosci stron")
+        print("10. Usun duplikaty z listy")
+        print("11. Sprawdz czy lista jest palindromem")
+        print("12. Koniec")
+        wybor = int(input())
+        if(wybor == 1):
+            print('')
+            print('Podaj nazwe książki: ')
+            nazwa = input()
+            print('Podaj ilosc stron: ')
+            strony = int(input())
+            print('')
+            lista.dodaj((nazwa,strony))
+        if(wybor == 2):
+            print('')
+            print('Podaj nazwe książki: ')
+            nazwa = input()
+            print('Podaj ilosc stron: ')
+            strony = int(input())
+            print('Podaj indeks: ')
+            indeks = int(input())
+            print('')
+            lista.wstaw((nazwa,strony),indeks)
+        if(wybor == 3):
+            print('')
+            print('Dlugosc list: ', lista.dlugosc())
+            print('')
+        if(wybor == 4):
+            lista.wyswietl()
+        if(wybor == 5):
+            print('')
+            print('Podaj indeks: ')
+            indeks = int(input())
+            lista.usun(indeks)
+        if(wybor == 6):
+            wynik = lista.znajdzNajdluzsza()
+            nazwa = wynik[0]
+            strony = wynik[1]
+            print('')
+            print('Najdluzsza ksiazka to ', nazwa, ' majaca ', strony, ' stron.')
+            print('')
+        if(wybor == 7):
+            wynik = lista.znajdzNajkrotsza()
+            nazwa = wynik[0]
+            strony = wynik[1]
+            print('')
+            print('Najkrotsza ksiazka to ', nazwa, ' majaca ', strony, ' stron.')
+            print('')
+        if(wybor == 8):
+            lista = lista.sortuj_przez_scalanie(0)
+        if(wybor == 9):
+            lista = lista.sortuj_przez_scalanie(1)
+        if(wybor == 10):
+            lista.usun_duplikaty()
+        if(wybor == 11):
+            if lista.czyPalindrom():
+                print('')
+                print('Lista jest palindromem')
+                print('')
+            else:
+                print('')
+                print('Lista nie jest palindromem')
+                print('')
+        if(wybor == 12):
+            break
+menu(Lista())
