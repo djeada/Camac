@@ -75,17 +75,15 @@ class Lista():
             nowa.dodaj(licznik.dane)
             licznik = licznik.nastepny
         nowa.dodaj(licznik.dane)
-        return nowa
-  
-    def odwroc(self):
-        poprzednik = None
         licznik = self.glowa
-        while licznik:
-            nastepnik = licznik.nastepny
-            licznik.nastepny = poprzednik
-            poprzednik = licznik
-            licznik = nastepnik
-        self.glowa = poprzednik
+        nowaLicznik = nowa.glowa
+        i = 0
+        while licznik.nastepny != None:
+            nowaLicznik.losowy = licznik.losowy
+            dodajDoSlownika(nowa.poloczenia, nowaLicznik.dane, licznik.losowy.dane)
+            licznik = licznik.nastepny
+            nowaLicznik = nowaLicznik.nastepny
+        return nowa
 
 def dodajDoSlownika(slownik, klucz, wartosc):
     if klucz in slownik:
@@ -116,10 +114,17 @@ lista = Lista()
 for i in range(10):
     lista.dodaj(i)
 lista.ustawLosowe()
-print('Lista: ')
+print('Lista1: ')
 lista.wyswietl()
 print('Polaczenia losowe: ')
 lista.wyswietlLosowe()
+print('')
+
+lista2 = lista.klonuj()
+print('Lista2: ')
+lista2.wyswietl()
+print('Polaczenia losowe: ')
+lista2.wyswietlLosowe()
 
 
 
