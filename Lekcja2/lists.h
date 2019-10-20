@@ -37,8 +37,8 @@ void* get(struct List* list, size_t index); //Get data stored on specified list 
 void insert(struct List* list, void* data, size_t index); //Insert data on specified list index
 void clear(struct List* list); //Remove all elements form list
 void del(struct List* list, size_t index); //Remove data on specified list index
-void lenght(struct List* list); //Return list lenght
-void print(struct List* list, size_t index); //Print data stored on specified list index
+size_t lenght(struct List* list); //Return list lenght
+//void print(struct List* list, size_t index, const char* format); //Print data stored on specified list index
 size_t find(struct List* list, void* data); //Find list index where specified data is stored
 
 //Advanced functions:
@@ -47,4 +47,20 @@ struct List* copy(struct List* list); //Make copy of list
 void shuffle(struct List* list); //Shuffle data in list
 void quick_sort(struct List* list); //Quick sort data in list based on memory adresses
 
+//Printing data like C(dungeon) master:
+#define print_data(list,index,type_t,format) ({ \
+	void* data = get(list,index);\
+	printf(format, *(type_t*) data);\
+	})
+
+//Even more divine intelect:
+#define print_all(list,type_t,format) ({ \
+	int i=0;\
+	for(i=0;i<list->num;i++)\
+	{ \
+		printf("Element %d inside list contain:\n", i);\
+		print_data(list,i,type_t,format);\
+		putchar('\n');\
+	} \
+	})
 #endif
