@@ -1,8 +1,8 @@
 
 def wyszukiwanie_binarne(lista, x):
     lewy = 0
-    prawy = len(lista) - 1
-    while lewy < prawy:
+    prawy = len(lista)
+    while lewy <= prawy:
         srodek = int((lewy + prawy)/2)
         if x == lista[srodek]:
             return srodek
