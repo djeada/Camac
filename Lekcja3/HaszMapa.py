@@ -51,7 +51,7 @@ class HaszMapa:
                     print(x[0], ' : ', x[1])
 
 def dodaj_ksiazke(lista_ksiazek, klucze):
-    ksiazka = haszMapa(len(klucze))
+    ksiazka = HaszMapa(len(klucze))
     while 1:
         print('Podaj tytul ksiazki')
         tytul = input()
@@ -65,36 +65,36 @@ def dodaj_ksiazke(lista_ksiazek, klucze):
         if klucz != 'Tytul':
             print('Podaj {0}:'.format(klucz))
             dane = input()
-            if int(dane):
-                dane = int(dane)
+            if dane.isdigit():
+                dane =int(dane)
             ksiazka.dodaj(klucz, dane)
 
     lista_ksiazek.append(ksiazka)
     
 def czy_ksiazka(lista_ksiazek, tytul):
     for ksiazka in lista_ksiazek:
-        if tytul == ksiazka['Tytul']:
+        if tytul == ksiazka.pobierz('Tytul'):
             return True
     return False
 
-def usun_ksiazke(lista_ksiazek, tytul):
+def usun_ksiazke(lista_ksiazek):
     print('Podaj nazwe ksiazki ktora chcesz usunac')
     tytul = input()
     if not czy_ksiazka(lista_ksiazek, tytul):
         print('Ksiazka o tytule ', tytul, ' nie znajduje sie w zbiorze!')
     else:
         for ksiazka in lista_ksiazek:
-            if tytul == ksiazka['Tytul']:
-                del ksiazka
+            if tytul == ksiazka.pobierz('Tytul'):
+                lista_ksiazek.remove(ksiazka)
                 print('Poprawnie usunieto')
                 break
 
 def najtansza(lista_ksiazek):
     indeks = 0
-    najtansza = lista_ksiazek[0]['Cena']
+    najtansza = lista_ksiazek[0].pobierz('Cena')
     for i in range(1, len(lista_ksiazek)):
-        if lista_ksiazek[i]['Cena'] < najtansza:
-            najtansza = lista_ksiazek[i]['Cena']
+        if lista_ksiazek[i].pobierz('Cena') < najtansza:
+            najtansza = lista_ksiazek[i].pobierz('Cena')
             indeks = i
     return indeks
 
@@ -111,13 +111,43 @@ def sortuj_liste(lista_ksiazek, klucze):
     for i in range(len(klucze)):
         print('{0}. {1}'.format(i, klucze[i]))
     wybor = int(input())
-    sortuj(lista_ksiazek, wybor)
+    lista_ksiazek = sortuj(lista_ksiazek, klucze[wybor])
 
-def sortuj(lista_ksiazek, wybor)
-    pass
+def sortuj(lista, wybor):
+    if len(lista) <= 1:
+        return lista
+    else:
+        lewy, prawy = podziel(lista)
+        return polacz(sortuj(lewy, wybor), sortuj(prawy, wybor), wybor)
 
-lista_ksiazek = []
-klucze = ['Tytul', 'Autor', 'Rok Wydania', 'Cena', 'Liczba Stron']
+def podziel(lista):
+    return lista[:int(len(lista)/2)], lista[int(len(lista)/2):]
+
+def polacz(lewy, prawy, wybor):
+    if len(lewy) == 0:
+        return prawy
+    elif len(prawy) == 0:
+        return lewy
+    
+    indeks_l = indeks_p = 0
+    polaczone = []
+    dlugosc = len(lewy) + len(prawy)
+    while len(polaczone) < dlugosc:
+        if lewy[indeks_l].pobierz(wybor) <= prawy[indeks_p].pobierz(wybor):
+            polaczone.append(lewy[indeks_l])
+            indeks_l += 1
+        else:
+            polaczone.append(prawy[indeks_p])
+            indeks_p += 1
+            
+        if indeks_p == len(prawy):
+            polaczone += lewy[indeks_l:]
+            break
+        elif indeks_l == len(lewy):
+            polaczone += prawy[indeks_p:]
+            break
+        
+    return polaczone
 
 def menu(lista_ksiazek, klucze):
     while 1:
@@ -125,6 +155,7 @@ def menu(lista_ksiazek, klucze):
         print('2. Wyswietl ksiazki')
         print('3. Posortuj ksiazki wedlug klucza')
         print('4. Usun ksiazke')
+        print('5. Pokaz najtansza')
         wybor = int(input())
         if wybor == 1:
             dodaj_ksiazke(lista_ksiazek, klucze)
@@ -133,6 +164,10 @@ def menu(lista_ksiazek, klucze):
         if wybor == 3:
             sortuj_liste(lista_ksiazek, klucze)
         if wybor == 4:
-            usun_ksiazke(lista_ksiazek, tytul)
+            usun_ksiazke(lista_ksiazek)
+        if wybor == 5:
+            lista_ksiazek[najtansza(lista_ksiazek)].wyswietl()
 
-menu()
+lista_ksiazek = []
+klucze = ['Tytul', 'Autor', 'Rok Wydania', 'Cena', 'Liczba Stron']
+menu(lista_ksiazek, klucze)
