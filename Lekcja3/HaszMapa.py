@@ -78,10 +78,16 @@ def czy_ksiazka(lista_ksiazek, tytul):
     return False
 
 def usun_ksiazke(lista_ksiazek, tytul):
-    for ksiazka in lista_ksiazek:
-        if tytul == ksiazka['Tytul']:
-            del ksiazka
-            break
+    print('Podaj nazwe ksiazki ktora chcesz usunac')
+    tytul = input()
+    if not czy_ksiazka(lista_ksiazek, tytul):
+        print('Ksiazka o tytule ', tytul, ' nie znajduje sie w zbiorze!')
+    else:
+        for ksiazka in lista_ksiazek:
+            if tytul == ksiazka['Tytul']:
+                del ksiazka
+                print('Poprawnie usunieto')
+                break
 
 def najtansza(lista_ksiazek):
     indeks = 0
@@ -100,13 +106,15 @@ def wyswietl(lista_ksiazek, klucze):
         print(' ')
         i += 1
 
-def sortuj_liste(lista_ksiazek):
+def sortuj_liste(lista_ksiazek, klucze):
     print('Wzgledem jakiego kryterium posorotwac liste?')
-    print('1. Ilosc stron')
-    print('2. Cena')
-    print('3. Tytul')
-    print('4. Rok Wydania')
-    print('5. Autor')
+    for i in range(len(klucze)):
+        print('{0}. {1}'.format(i, klucze[i]))
+    wybor = int(input())
+    sortuj(lista_ksiazek, wybor)
+
+def sortuj(lista_ksiazek, wybor)
+    pass
 
 lista_ksiazek = []
 klucze = ['Tytul', 'Autor', 'Rok Wydania', 'Cena', 'Liczba Stron']
@@ -119,15 +127,12 @@ def menu(lista_ksiazek, klucze):
         print('4. Usun ksiazke')
         wybor = int(input())
         if wybor == 1:
-            dodaj
+            dodaj_ksiazke(lista_ksiazek, klucze)
         if wybor == 2:
-        
-while 1:
-    print('Podaj nazwe ksiazki ktora chcesz usunac')
-    tytul = input()
-    if not czy_ksiazka(lista_ksiazek, tytul):
-        print('Ksiazka o tytule ', tytul, ' nie znajduje sie w zbiorze!')
-    else:
-        usun_ksiazke(lista_ksiazek, tytul)
-        print('Poprawnie usunieto')
-        break
+            wyswietl(lista_ksiazek, klucze)
+        if wybor == 3:
+            sortuj_liste(lista_ksiazek, klucze)
+        if wybor == 4:
+            usun_ksiazke(lista_ksiazek, tytul)
+
+menu()
