@@ -1,0 +1,11 @@
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\bin\Debug\netcoreapp3.0\Zad1_slownik.exe
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\bin\Debug\netcoreapp3.0\Zad1_slownik.deps.json
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\bin\Debug\netcoreapp3.0\Zad1_slownik.runtimeconfig.json
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\bin\Debug\netcoreapp3.0\Zad1_slownik.runtimeconfig.dev.json
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\bin\Debug\netcoreapp3.0\Zad1_slownik.dll
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\bin\Debug\netcoreapp3.0\Zad1_slownik.pdb
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\obj\Debug\netcoreapp3.0\Zad1_slownik.csprojAssemblyReference.cache
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\obj\Debug\netcoreapp3.0\Zad1_slownik.AssemblyInfoInputs.cache
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\obj\Debug\netcoreapp3.0\Zad1_slownik.AssemblyInfo.cs
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\obj\Debug\netcoreapp3.0\Zad1_slownik.dll
+C:\Users\Laptop\Desktop\Visual Studio Programowanie\SRAMZES\Haszowanie\Zad3\Zad3\obj\Debug\netcoreapp3.0\Zad1_slownik.pdb
