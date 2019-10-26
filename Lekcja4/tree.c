@@ -90,7 +90,7 @@ void dodaj(struct Tree* t, int var)
 	}while(1);
 }
 
-void wypisz_LR(struct Tree* t)
+void wypisz_VLR(struct Tree* t)
 {
 	if(t != NULL)
 	{
@@ -98,20 +98,30 @@ void wypisz_LR(struct Tree* t)
 		printf("%d\n", t->wartosc);
 		if(ptr->L != NULL)
 		{
-			wypisz_LR(ptr->L);
+			wypisz_VLR(ptr->L);
 		}
 		if(ptr->R != NULL)
 		{
-			wypisz_LR(ptr->R);
+			wypisz_VLR(ptr->R);
 		}
 	}
 }
 
-void wypisz_VLR(struct Tree* t)
+void wypisz_VRL(struct Tree* t)
 {
-	printf("%d\n", t->wartosc);
-	wypisz_LR(t->L);
-	wypisz_LR(t->R);
+	if(t != NULL)
+	{
+		struct Tree* ptr = t;
+		printf("%d\n", t->wartosc);
+		if(ptr->R != NULL)
+		{
+			wypisz_VRL(ptr->R);
+		}
+		if(ptr->L != NULL)
+		{
+			wypisz_VRL(ptr->L);
+		}
+	}
 }
 
 int main()
@@ -127,7 +137,10 @@ int main()
 	dodaj(root, 3);
 	dodaj(root, 1);
 
+	printf("VLR: \n");
 	wypisz_VLR(root);
+	printf("VRL: \n");
+	wypisz_VRL(root);
 
 	free_tree(root);	
 	return 0;
