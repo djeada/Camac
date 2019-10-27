@@ -7,6 +7,11 @@ struct List* init_list(size_t type_size)
 	struct List** all; //HERE!!!!!!!!!!
 
 	struct List* list = (struct List*) malloc(sizeof(struct List));
+	if(NULL == list)
+	{
+		perror("Cannot alocate memory for list!\n");
+		return(NULL);
+	}
 
 	//Maybe used to distinguish lists in future:
 	list->List_ID = ID_counter;
@@ -385,49 +390,4 @@ void quick_sort(struct List* list)
 
 }
 
-/*
-//--------------------------------
-//[WARNING] No god under this line
-//--------------------------------
 
-void push_l(void* data)
-{
-	struct List* list = setjmp(env1);
-
-	if(list == 0)
-		longjmp(env2, 1);
-
-	push_list(list, data);
-}
-
-void pop_l()
-{
-
-}
-
-void* get_l(size_t index)
-{
-
-}
-
-void insert_l(void* data, size_t index)
-{
-
-}
-
-void clear_l()
-{
-
-}
-
-void del_l(size_t index)
-{
-
-}
-
-size_t lenght_l()
-{
-
-}
-
-*/

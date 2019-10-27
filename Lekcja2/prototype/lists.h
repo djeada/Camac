@@ -33,7 +33,7 @@ struct List{
 	void (*insert)(void*, size_t);
 	void (*clear)();
 	void (*del)(size_t);
-	void (*lenght)();
+	size_t (*lenght)();
 };
 
 //Initialization and destruction of list:
@@ -59,7 +59,7 @@ void quick_sort(struct List* list); //Quick sort data in list based on memory ad
 
 //Printing data like C(dungeon) master:
 #define print_data(list,index,type_t,format) ({ \
-	void* data = get(list,index);\
+	void* data = get_list(list,index);\
 	printf(format, *(type_t*) data);\
 	})
 
@@ -74,16 +74,61 @@ void quick_sort(struct List* list); //Quick sort data in list based on memory ad
 	} \
 	})
 
-//Revealed programming level:
+//[WARNING] Maxwell revealed programming:
 
-jmp_buf env1, env2; //And you still belive that jmp sucks?
-void push_l(void* data);
-void pop_l();
-void* get_l(size_t index);
-void insert_l(void* data, size_t index);
-void clear_l();
-void del_l(size_t index);
-size_t lenght_l();
+#define init(list,type_size) \
+	list = init_list(type_size);\
+	\
+	\
+	void push_##list(void* data)\
+	{\
+		struct List* list_in_macro_##list = list; \
+		push_list(list_in_macro_##list, data);\
+	}\
+	\
+	void pop_##list()\
+	{\
+		struct List* list_in_macro_##list = list; \
+		pop_list(list_in_macro_##list);\
+	}\
+	\
+	void* get_##list(size_t index)\
+	{\
+		struct List* list_in_macro_##list = list; \
+		return get_list(list_in_macro_##list, index);\
+	}\
+	\
+	void insert_##list(void* data, size_t index)\
+	{\
+		struct List* list_in_macro_##list = list; \
+		insert_list(list_in_macro_##list, data, index);\
+	}\
+	\
+	void clear_##list()\
+	{\
+		struct List* list_in_macro_##list = list; \
+		clear_list(list_in_macro_##list);\
+	}\
+	\
+	void del_##list(size_t index)\
+	{\
+		struct List* list_in_macro_##list = list; \
+		del_list(list_in_macro_##list, index);\
+	}\
+	\
+	size_t lenght_##list()\
+	{\
+		struct List* list_in_macro_##list = list; \
+		return lenght_list(list_in_macro_##list);\
+	}\
+	\
+	list->push = push_##list;\
+	list->pop = pop_##list;\
+	list->get = get_##list;\
+	list->insert = insert_##list;\
+	list->clear = clear_##list;\
+	list->del = del_##list;\
+	list->lenght = lenght_##list
 
 
 #endif
