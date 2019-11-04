@@ -57,6 +57,54 @@ class DrzewoBinarne():
         print('Wsteczne: ')
         print(wsteczne(wynik, self.korzen))
 
+    def znajdzPoziom(self, x):
+        return len(self.sciezka(x)) - 1
+    
+    def sciezka(self, x):
+        def _sciezka(wierzcholek, x, l=[]):
+            if not wierzcholek:
+                return []
+            if wierzcholek.dane == x:
+                return [wierzcholek.dane]
+            res = _sciezka(wierzcholek.lewy, x)
+            if res:
+                return [wierzcholek.dane] + res
+            res = _sciezka(wierzcholek.prawy, x)
+            if res:
+                return [wierzcholek.dane] + res
+            return []
+        return _sciezka(self.korzen, x)
+
+    def poprzeczne(self):
+        def _poprzeczne(wierzcholek):
+            dane = []
+            if wierzcholek:
+                dane = _poprzeczne(wierzcholek.lewy)
+                dane.append(wierzcholek.dane)
+                dane +=_poprzeczne(wierzcholek.prawy)
+            return dane
+        return _poprzeczne(self.korzen)
+
+    def wzdluzne(self):
+        def _wzdluzne(wierzcholek):
+            dane = []
+            if wierzcholek:
+                dane.append(wierzcholek.dane)
+                dane += _wzdluzne(wierzcholek.lewy)
+                dane +=_wzdluzne(wierzcholek.prawy)
+            return dane
+        return _wzdluzne(self.korzen)
+    
+    def wsteczne(self):
+        def _wsteczne(wierzcholek):
+            dane = []
+            if wierzcholek:
+                dane = _wsteczne(wierzcholek.lewy)
+                dane +=_wsteczne(wierzcholek.prawy)
+                dane.append(wierzcholek.dane)
+            return dane
+        return _wsteczne(self.korzen)
+    
     def wyszukaj(self, dane):
         if self.korzen.dane == dane:
             return self.korzen        
@@ -113,7 +161,15 @@ def calculateOffset(n):
 def swap(a, b):
     a.dane, b.dane = b.dane, a.dane
 
+d = DrzewoBinarne()
+d.dodaj(8)
+d.dodaj(2)
+d.dodaj(3)
+d.dodaj(9)
+d.dodaj(5)
+print(d.znajdzPoziom(5))
+'''
 window = setup()
 while True:
     drawBoard(window)
-pygame.display.quit()
+'''
