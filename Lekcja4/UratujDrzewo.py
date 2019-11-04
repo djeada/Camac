@@ -1,6 +1,9 @@
 import random
-import pygame
 import math
+import os
+import tkinter as tk
+from tkinter import *
+import pygame
 from pygame.locals import *
 
 class Wezel():
@@ -118,16 +121,23 @@ class DrzewoBinarne():
                     return wyszukaj_wierzcholek(wierzcholek.prawy, dane)
         return wyszukaj_wierzcholek(self.korzen,dane)
 
-def setup():
+def setup(root):
+    embed = tk.Frame(root, width = 500, height = 500) #creates embed frame for pygame window
+    embed.grid(columnspan = (600), rowspan = 500) # Adds grid
+    embed.pack(side = LEFT) #packs window to the left
+    buttonwin = tk.Frame(root, width = 75, height = 500)
+    buttonwin.pack(side = LEFT)
+    os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
+    os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
     pygame.display.set_caption("Binarne Drzewo Poszukiwań")
     pygame.font.init()
     window = pygame.display.set_mode(((800,600)))
     window.set_alpha(None)
     window.fill(pygame.Color(0,0,0))
-    return window
+    return buttonwin, window
 
-def drawBoard(window):
+def drawBoard(window, root):
     window.fill(pygame.Color(0,0,0))
     drawCircle(window, 400, 40, 151)
     for event in pygame.event.get():
@@ -136,6 +146,8 @@ def drawBoard(window):
         if event.type == pygame.QUIT:
             pygame.quit()
     pygame.display.update()
+    root.update()
+
 
 def uzdrowBST(rodzic, dziecko):
     if dziecko:
@@ -167,9 +179,11 @@ d.dodaj(2)
 d.dodaj(3)
 d.dodaj(9)
 d.dodaj(5)
-print(d.znajdzPoziom(5))
-'''
-window = setup()
+
+root = tk.Tk()
+buttonwin, window = setup(root)
+button1 = Button(buttonwin,text = 'Insert')
+button1.pack(side=LEFT)
+root.update()
 while True:
-    drawBoard(window)
-'''
+    drawBoard(window, root)
