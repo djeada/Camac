@@ -125,8 +125,6 @@ def setup(root):
     embed = tk.Frame(root, width = 1000, height = 600)
     embed.grid(columnspan = (600), rowspan = 500)
     embed.pack(side = LEFT)
-    buttonwin = tk.Frame(root, width = 75, height = 500)
-    buttonwin.pack(side = TOP)
     os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
     os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
@@ -134,7 +132,7 @@ def setup(root):
     pygame.font.init()
     window = pygame.display.set_mode(((800,600)))
     window.set_alpha(None)
-    return buttonwin, window
+    return window
 
 def drawBoard(window, root):
     window.fill(pygame.Color(50,235,50))
@@ -180,9 +178,19 @@ d.dodaj(9)
 d.dodaj(5)
 
 root = tk.Tk()
-buttonwin, window = setup(root)
-button1 = Button(buttonwin,text = 'Insert')
-button1.pack(side=LEFT)
+window = setup(root)
+bInsert = Button(text = 'Insert')
+bInsert.pack()
+bRemove = Button(text = 'Remove')
+bRemove.pack()
+bSearch = Button(text = 'Search')
+bSearch.pack()
+bInorder = Button(text = 'Inorder')
+bInorder.pack()
+bPreorder = Button(text = 'Preorder')
+bPreorder.pack()
+bPostorder = Button(text = 'Postorder')
+bPostorder.pack()
 root.update()
 while True:
     drawBoard(window, root)
