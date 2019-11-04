@@ -122,11 +122,11 @@ class DrzewoBinarne():
         return wyszukaj_wierzcholek(self.korzen,dane)
 
 def setup(root):
-    embed = tk.Frame(root, width = 500, height = 500) #creates embed frame for pygame window
-    embed.grid(columnspan = (600), rowspan = 500) # Adds grid
-    embed.pack(side = LEFT) #packs window to the left
+    embed = tk.Frame(root, width = 1000, height = 600)
+    embed.grid(columnspan = (600), rowspan = 500)
+    embed.pack(side = LEFT)
     buttonwin = tk.Frame(root, width = 75, height = 500)
-    buttonwin.pack(side = LEFT)
+    buttonwin.pack(side = TOP)
     os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
     os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
@@ -134,11 +134,10 @@ def setup(root):
     pygame.font.init()
     window = pygame.display.set_mode(((800,600)))
     window.set_alpha(None)
-    window.fill(pygame.Color(0,0,0))
     return buttonwin, window
 
 def drawBoard(window, root):
-    window.fill(pygame.Color(0,0,0))
+    window.fill(pygame.Color(50,235,50))
     drawCircle(window, 400, 40, 151)
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
