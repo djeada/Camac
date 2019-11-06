@@ -138,24 +138,22 @@ class DrzewoBinarne():
         return wyszukaj_wierzcholek(self.korzen,dane)
 
 def setup(root):
-    embed = tk.Frame(root, width = 1000, height = 600)
+    embed = tk.Frame(root, width = 1200, height = 800)
     embed.grid(columnspan = (600), rowspan = 500)
     embed.pack(side = LEFT)
     os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
     os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
-    pygame.display.set_caption("Binarne Drzewo Poszukiwań")
     pygame.font.init()
-    window = pygame.display.set_mode(((800,600)))
+    window = pygame.display.set_mode(((1000,800)))
     window.set_alpha(None)
     return window
 
-def rysujPlansze(window, root, drzewo, wspolrzende):
+def rysujPlansze(window, root, drzewo, wspolrzendne):
     window.fill(pygame.Color(50,235,50))
     for dane in drzewo.wzdluzne():
-        print(dane)
-        x, y = obliczWspolrzedne(drzewo, dane, wspolrzedne)
-        rysujWezel(window, x, y, dane)
+        x, y = obliczWspolrzedne(drzewo, dane, wspolrzendne)
+        rysujWezel(window, x, y, dane, drzewo, wspolrzendne)
 
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
@@ -165,21 +163,36 @@ def rysujPlansze(window, root, drzewo, wspolrzende):
     pygame.display.update()
     root.update()
 
-def rysujWezel(window, x, y, dane):
+def rysujWezel(window, x, y, dane, drzewo, wspolrzendne):
     pygame.draw.circle(window,pygame.Color(255,255,255),(x, y), 30)
+    if not drzewo.czyKorzen(dane):
+        startX, startY = wspolrzendne[drzewo.znajdzRodzica(dane)]
+        if drzewo.ktoreDziecko(dane) == 'prawy':
+            pygame.draw.line(window, pygame.Color(0,0,0), (startX+30,startY), (x-30,y))
+        else:
+            pygame.draw.line(window, pygame.Color(0,0,0), (startX-30,startY), (x+30,y))
     myfont = pygame.font.SysFont('Comic Sans MS', 30)
     textsurface = myfont.render(str(dane), False, (0, 0, 0))
     window.blit(textsurface,(x-obliczOffset(dane),y-20))
 
-def obliczWspolrzedne(drzewo, dane, wspolrzedne):
-    y = 50*(drzewo.znajdzPoziom(dane)+1)
+def obliczWspolrzedne(drzewo, dane, wspolrzendne):
+    poziom = drzewo.znajdzPoziom(dane)
+    y = 70*(poziom + 1)
     if drzewo.czyKorzen(dane):
-        x = 400
+        x = 500
     else:
-        x = int(wspolrzedne[drzewo.znajdzRodzica(dane)][0] + 100*(2 - 0.3*drzewo.znajdzPoziom(dane)))
-        if drzewo.ktoreDziecko(dane) == 'lewy':
-            x *= -1
-    wspolrzedne[dane] = (x, y)        
+        x = wspolrzendne[drzewo.znajdzRodzica(dane)][0]
+        if drzewo.ktoreDziecko(dane) == 'prawy':
+            if poziom < 4:
+                x += 100*(4 - poziom)
+            else:
+                x += 100
+        else:
+            if poziom < 4:
+                x -= 100*(4 - poziom)
+            else:
+                x -= 100
+    wspolrzendne[dane] = (x, y)        
     return (x, y)
 
 def obliczOffset(n):
@@ -208,6 +221,8 @@ d.dodaj(9)
 d.dodaj(5)
 
 root = tk.Tk()
+root.title('Binarne Drzewo Poszukiwań')
+
 window = setup(root)
 bInsert = Button(text = 'Insert')
 bInsert.pack()
@@ -222,6 +237,6 @@ bPreorder.pack()
 bPostorder = Button(text = 'Postorder')
 bPostorder.pack()
 
-wspolrzedne = dict()
+wspolrzendne = dict()
 while True:
-    rysujPlansze(window, root, d, wspolrzedne)
+    rysujPlansze(window, root, d, wspolrzendne)
