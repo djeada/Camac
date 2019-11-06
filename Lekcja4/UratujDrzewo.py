@@ -15,6 +15,7 @@ class Wezel():
 class DrzewoBinarne():
     def __init__(self):
         self.korzen = Wezel()
+        self.dlugosc = 0
 
     def dodaj(self, dane):
         if self.korzen.dane == None:
@@ -32,6 +33,7 @@ class DrzewoBinarne():
                     else:
                         dodaj_do_wierzcholka(wierzcholek.prawy, dane)
             dodaj_do_wierzcholka(self.korzen, dane)
+        self.dlugosc += 1
 
     def wyswietl(self):
         wynik = ''
@@ -60,8 +62,22 @@ class DrzewoBinarne():
         print('Wsteczne: ')
         print(wsteczne(wynik, self.korzen))
 
+    def czyKorzen(self, x):
+        if self.korzen.dane == x:
+            return True
+        return False
+    
     def znajdzPoziom(self, x):
         return len(self.sciezka(x)) - 1
+
+    def znajdzRodzica(self, x):
+        return self.sciezka(x)[-2]
+
+    def ktoreDziecko(self, x):
+        if self.wyszukaj(self.znajdzRodzica(x)).lewy:
+            if self.wyszukaj(self.znajdzRodzica(x)).lewy.dane == x:
+                return 'lewy'
+        return 'prawy'
     
     def sciezka(self, x):
         def _sciezka(wierzcholek, x, l=[]):
@@ -134,9 +150,13 @@ def setup(root):
     window.set_alpha(None)
     return window
 
-def drawBoard(window, root):
+def rysujPlansze(window, root, drzewo, wspolrzende):
     window.fill(pygame.Color(50,235,50))
-    drawCircle(window, 400, 40, 151)
+    for dane in drzewo.wzdluzne():
+        print(dane)
+        x, y = obliczWspolrzedne(drzewo, dane, wspolrzedne)
+        rysujWezel(window, x, y, dane)
+
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
             None
@@ -145,6 +165,30 @@ def drawBoard(window, root):
     pygame.display.update()
     root.update()
 
+def rysujWezel(window, x, y, dane):
+    pygame.draw.circle(window,pygame.Color(255,255,255),(x, y), 30)
+    myfont = pygame.font.SysFont('Comic Sans MS', 30)
+    textsurface = myfont.render(str(dane), False, (0, 0, 0))
+    window.blit(textsurface,(x-obliczOffset(dane),y-20))
+
+def obliczWspolrzedne(drzewo, dane, wspolrzedne):
+    y = 50*(drzewo.znajdzPoziom(dane)+1)
+    if drzewo.czyKorzen(dane):
+        x = 400
+    else:
+        x = int(wspolrzedne[drzewo.znajdzRodzica(dane)][0] + 100*(2 - 0.3*drzewo.znajdzPoziom(dane)))
+        if drzewo.ktoreDziecko(dane) == 'lewy':
+            x *= -1
+    wspolrzedne[dane] = (x, y)        
+    return (x, y)
+
+def obliczOffset(n):
+    if n > 0:
+        return (int(math.log10(n))+1)*7.5
+    elif n == 0:
+        return 10
+    else:
+        return (int(math.log10(-n))+2)*6
 
 def uzdrowBST(rodzic, dziecko):
     if dziecko:
@@ -152,20 +196,6 @@ def uzdrowBST(rodzic, dziecko):
             swap(rodzic, dziecko)
         if dziecko == rodzic.prawy and dziecko.dane < rodzic.dane:
             swap(rodzic, dziecko)
-
-def drawCircle(window, x, y, dane):
-    pygame.draw.circle(window,pygame.Color(255,255,255),(x, y), 30)
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
-    textsurface = myfont.render(str(dane), False, (0, 0, 0))
-    window.blit(textsurface,(x-calculateOffset(dane),y-20))
-
-def calculateOffset(n):
-    if n > 0:
-        return (int(math.log10(n))+1)*7.5
-    elif n == 0:
-        return 10
-    else:
-        return (int(math.log10(-n))+2)*6
 
 def swap(a, b):
     a.dane, b.dane = b.dane, a.dane
@@ -191,6 +221,7 @@ bPreorder = Button(text = 'Preorder')
 bPreorder.pack()
 bPostorder = Button(text = 'Postorder')
 bPostorder.pack()
-root.update()
+
+wspolrzedne = dict()
 while True:
-    drawBoard(window, root)
+    rysujPlansze(window, root, d, wspolrzedne)
