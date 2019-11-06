@@ -203,6 +203,44 @@ def obliczOffset(n):
     else:
         return (int(math.log10(-n))+2)*6
 
+def budujGui():
+    root = tk.Tk()
+    root.title('Binarne Drzewo Poszukiwań')
+    window = setup(root)
+    bInsert = Button(text = 'Dodaj')
+    bInsert.pack()
+    bRemove = Button(text = 'Usun')
+    bRemove.pack()
+    bSearch = Button(text = 'Wyszukaj')
+    bSearch.pack()
+    textArea = Text(root, height=2, width=30)
+    textArea.pack()
+    bInorder = Button(text = 'Poprzeczne')
+    bInorder.pack()
+    bPreorder = Button(text = 'Wzdluzne')
+    bPreorder.pack()
+    bPostorder = Button(text = 'Wsteczne')
+    bPostorder.pack()
+    b=Button(root,text="click me!",command=(lambda:popup('hej')))
+    b.pack()
+    return root, window
+
+class popupWindow():
+    def __init__(self, s):
+        win = Toplevel()
+        self.l=Label(win,text=s)
+        self.l.pack()
+        self.e=Entry(win)
+        self.e.pack()
+        self.b=Button(win,text='Ok',command=self.cleanup)
+        self.b.pack()
+    def cleanup(self):
+        self.value=self.e.get()
+        self.win.destroy()
+
+def popup(s):
+        w=popupWindow(s)
+
 def uzdrowBST(rodzic, dziecko):
     if dziecko:
         if dziecko == rodzic.lewy and dziecko.dane > rodzic.dane:
@@ -220,22 +258,7 @@ d.dodaj(3)
 d.dodaj(9)
 d.dodaj(5)
 
-root = tk.Tk()
-root.title('Binarne Drzewo Poszukiwań')
-
-window = setup(root)
-bInsert = Button(text = 'Insert')
-bInsert.pack()
-bRemove = Button(text = 'Remove')
-bRemove.pack()
-bSearch = Button(text = 'Search')
-bSearch.pack()
-bInorder = Button(text = 'Inorder')
-bInorder.pack()
-bPreorder = Button(text = 'Preorder')
-bPreorder.pack()
-bPostorder = Button(text = 'Postorder')
-bPostorder.pack()
+root, window = budujGui()
 
 wspolrzendne = dict()
 while True:
