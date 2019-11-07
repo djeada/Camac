@@ -104,6 +104,22 @@ class DrzewoBinarne():
                 if self.wyszukaj(self.znajdzRodzica(x)).lewy.dane == x:
                     return 'lewy'
         return 'prawy'
+
+    def lewaGalaz(self, x):
+        sciezka = []
+        wezel = self.wyszukaj(x)
+        while wezel:
+            sciezka.append(wezel.dane)
+            wezel = wezel.lewy
+        return sciezka
+
+    def prawaGalaz(self, x):
+        sciezka = []
+        wezel = self.wyszukaj(x)
+        while wezel:
+            sciezka.append(wezel.dane)
+            wezel = wezel.prawy
+        return sciezka      
     
     def sciezka(self, x):
         def _sciezka(wierzcholek, x, l=[]):
@@ -249,6 +265,8 @@ def budujGui(drzewo):
     bPostorder.pack()
     bRescue = Button(text = 'Uratuj', command=(lambda:uzdrowBST(drzewo)))
     bRescue.pack()
+    bMischief = Button(text = 'Namieszaj', command=(lambda:namieszaj(drzewo)))
+    bMischief.pack()
     return root, window
 
 def popupInput(s, drzewo):
@@ -279,15 +297,30 @@ def popup(s, drzewo):
     elif s == 'Wsteczne':
         messagebox.showinfo('Wsteczne', str(drzewo.wsteczne()))
 
+def namieszaj(drzewo):
+    x = drzewo.wzdluzne()
+    swap(drzewo.wyszukaj(x[random.randint(0,len(x)-1)]),drzewo.wyszukaj(x[random.randint(0,len(x)-1)]))
+
 def uzdrowBST(drzewo):
     for x in drzewo.wzdluzne():
         wezel = drzewo.wyszukaj(x)
-        if wezel.lewy:
-            if wezel.lewy.dane > wezel.dane:
-                swap(wezel, wezel.lewy)
-        if wezel.prawy:
-            if wezel.prawy.dane < wezel.dane:
-                swap(wezel, wezel.prawy)
+        if wezel:
+            for y in drzewo.lewaGalaz(x):
+                potomek = drzewo.wyszukaj(y)
+                if potomek:
+                    if potomek.dane > wezel.dane:
+                        swap(wezel, potomek)
+            for y in drzewo.prawaGalaz(x):
+                potomek = drzewo.wyszukaj(y)
+                if potomek:
+                    if potomek.dane < wezel.dane:
+                        swap(wezel, potomek)
+            if wezel.lewy:
+                if wezel.lewy.dane > wezel.dane:
+                    swap(wezel, wezel.lewy)
+            if wezel.prawy:
+                if wezel.prawy.dane < wezel.dane:
+                    swap(wezel, wezel.prawy)
 
 def swap(a, b):
     a.dane, b.dane = b.dane, a.dane
