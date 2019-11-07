@@ -3,6 +3,8 @@ import math
 import os
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
+from tkinter import simpledialog
 import pygame
 from pygame.locals import *
 
@@ -34,6 +36,29 @@ class DrzewoBinarne():
                         dodaj_do_wierzcholka(wierzcholek.prawy, dane)
             dodaj_do_wierzcholka(self.korzen, dane)
         self.dlugosc += 1
+
+    def usun(self, dane):
+        wezel = self.wyszukaj(dane)
+        if wezel:
+            rodzic = self.wyszukaj(self.znajdzRodzica(dane))
+            if self.ktoreDziecko(dane) == 'prawy':
+                if wezel.prawy:
+                    rodzic.prawy = wezel.prawy
+                    if wezel.lewy:
+                        wezel.prawy.lewy = wezel.lewy
+                else:
+                    rodzic.prawy = None
+                    if wezel.lewy:
+                        rodzic.prawy = wezel.lewy
+            else:
+                if wezel.lewy:
+                    rodzic.lewy = wezel.lewy
+                    if wezel.prawy:
+                        wezel.lewy.prawy = wezel.prawy
+                else:
+                    rodzic.lewy = None
+                    if wezel.prawy:
+                        rodzic.lewy = wezel.prawy
 
     def wyswietl(self):
         wynik = ''
@@ -74,9 +99,10 @@ class DrzewoBinarne():
         return self.sciezka(x)[-2]
 
     def ktoreDziecko(self, x):
-        if self.wyszukaj(self.znajdzRodzica(x)).lewy:
-            if self.wyszukaj(self.znajdzRodzica(x)).lewy.dane == x:
-                return 'lewy'
+        if self.wyszukaj(self.znajdzRodzica(x)):
+            if self.wyszukaj(self.znajdzRodzica(x)).lewy:
+                if self.wyszukaj(self.znajdzRodzica(x)).lewy.dane == x:
+                    return 'lewy'
         return 'prawy'
     
     def sciezka(self, x):
@@ -129,12 +155,13 @@ class DrzewoBinarne():
             return self.korzen        
         def wyszukaj_wierzcholek(wierzcholek, dane):
             if wierzcholek:
-                if wierzcholek.dane == dane:
-                    return wierzcholek
-                elif dane < wierzcholek.dane:
-                    return wyszukaj_wierzcholek(wierzcholek.lewy, dane)
-                else:
-                    return wyszukaj_wierzcholek(wierzcholek.prawy, dane)
+                if wierzcholek.dane:
+                    if wierzcholek.dane == dane:
+                        return wierzcholek
+                    elif dane < wierzcholek.dane:
+                        return wyszukaj_wierzcholek(wierzcholek.lewy, dane)
+                    else:
+                        return wyszukaj_wierzcholek(wierzcholek.prawy, dane)
         return wyszukaj_wierzcholek(self.korzen,dane)
 
 def setup(root):
@@ -145,7 +172,7 @@ def setup(root):
     os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
     pygame.font.init()
-    window = pygame.display.set_mode(((1000,800)))
+    window = pygame.display.set_mode(((1100,800)))
     window.set_alpha(None)
     return window
 
@@ -179,7 +206,7 @@ def obliczWspolrzedne(drzewo, dane, wspolrzendne):
     poziom = drzewo.znajdzPoziom(dane)
     y = 70*(poziom + 1)
     if drzewo.czyKorzen(dane):
-        x = 500
+        x = 550
     else:
         x = wspolrzendne[drzewo.znajdzRodzica(dane)][0]
         if drzewo.ktoreDziecko(dane) == 'prawy':
@@ -203,50 +230,64 @@ def obliczOffset(n):
     else:
         return (int(math.log10(-n))+2)*6
 
-def budujGui():
+def budujGui(drzewo):
     root = tk.Tk()
     root.title('Binarne Drzewo Poszukiwań')
+    root.option_add('*font', 'Calibri 22')
     window = setup(root)
-    bInsert = Button(text = 'Dodaj')
+    bInsert = Button(text = 'Dodaj',command=(lambda:popupInput('Dodaj', drzewo)))
     bInsert.pack()
-    bRemove = Button(text = 'Usun')
+    bRemove = Button(text = 'Usun', command=(lambda:popupInput('Usun', drzewo)))
     bRemove.pack()
-    bSearch = Button(text = 'Wyszukaj')
+    bSearch = Button(text = 'Wyszukaj', command=(lambda:popupInput('Wyszukaj', drzewo)))
     bSearch.pack()
-    textArea = Text(root, height=2, width=30)
-    textArea.pack()
-    bInorder = Button(text = 'Poprzeczne')
+    bInorder = Button(text = 'Poprzeczne', command=(lambda:popup('Poprzeczne', drzewo)))
     bInorder.pack()
-    bPreorder = Button(text = 'Wzdluzne')
+    bPreorder = Button(text = 'Wzdluzne', command=(lambda:popup('Wzdluzne', drzewo)))
     bPreorder.pack()
-    bPostorder = Button(text = 'Wsteczne')
+    bPostorder = Button(text = 'Wsteczne', command=(lambda:popup('Wsteczne', drzewo)))
     bPostorder.pack()
-    b=Button(root,text="click me!",command=(lambda:popup('hej')))
-    b.pack()
+    bRescue = Button(text = 'Uratuj', command=(lambda:uzdrowBST(drzewo)))
+    bRescue.pack()
     return root, window
 
-class popupWindow():
-    def __init__(self, s):
-        win = Toplevel()
-        self.l=Label(win,text=s)
-        self.l.pack()
-        self.e=Entry(win)
-        self.e.pack()
-        self.b=Button(win,text='Ok',command=self.cleanup)
-        self.b.pack()
-    def cleanup(self):
-        self.value=self.e.get()
-        self.win.destroy()
+def popupInput(s, drzewo):
+    dane = simpledialog.askinteger('Wprowadz dane',s, minvalue=0, maxvalue=999)
+    if s == 'Dodaj':
+        if drzewo.wyszukaj(dane):
+            messagebox.showerror('Error', 'Istnieje juz taki wezel')
+        else:
+            drzewo.dodaj(int(dane))
+            messagebox.showinfo('Sukces','Poprawnie dodano wezel')
+    elif s == 'Usun':
+        if drzewo.wyszukaj(dane):
+            drzewo.usun(int(dane))
+            messagebox.showinfo('Sukces','Poprawnie usunięto wezel')
+        else:
+            messagebox.showerror('Error', 'Nie ma takiego wezla')
+    elif s == 'Wyszukaj':
+        if drzewo.wyszukaj(int(dane)):
+            messagebox.showinfo('Sukces','Węzeł znajduje się w drzewie')
+        else:
+            messagebox.showerror('Error', 'Nie ma takiego wezla')
 
-def popup(s):
-        w=popupWindow(s)
+def popup(s, drzewo):
+    if s == 'Poprzeczne':
+        messagebox.showinfo('Poprzeczne', str(drzewo.poprzeczne()))
+    elif s == 'Wzdluzne':
+        messagebox.showinfo('Wzdluzne', str(drzewo.wzdluzne()))
+    elif s == 'Wsteczne':
+        messagebox.showinfo('Wsteczne', str(drzewo.wsteczne()))
 
-def uzdrowBST(rodzic, dziecko):
-    if dziecko:
-        if dziecko == rodzic.lewy and dziecko.dane > rodzic.dane:
-            swap(rodzic, dziecko)
-        if dziecko == rodzic.prawy and dziecko.dane < rodzic.dane:
-            swap(rodzic, dziecko)
+def uzdrowBST(drzewo):
+    for x in drzewo.wzdluzne():
+        wezel = drzewo.wyszukaj(x)
+        if wezel.lewy:
+            if wezel.lewy.dane > wezel.dane:
+                swap(wezel, wezel.lewy)
+        if wezel.prawy:
+            if wezel.prawy.dane < wezel.dane:
+                swap(wezel, wezel.prawy)
 
 def swap(a, b):
     a.dane, b.dane = b.dane, a.dane
@@ -257,9 +298,10 @@ d.dodaj(2)
 d.dodaj(3)
 d.dodaj(9)
 d.dodaj(5)
+swap(d.wyszukaj(2), d.wyszukaj(3))
 
-root, window = budujGui()
-
+root, window = budujGui(d)
 wspolrzendne = dict()
+
 while True:
     rysujPlansze(window, root, d, wspolrzendne)
