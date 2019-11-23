@@ -232,7 +232,7 @@ def obliczOffset(n):
 
 def budujGui(drzewo):
     root = tk.Tk()
-    root.title('Binarne Drzewo Poszukiwań')
+    root.title('Binarne Drzewo Poszukiwan')
     root.option_add('*font', 'Calibri 22')
     window = setup(root)
     bInsert = Button(text = 'Dodaj',command=(lambda:popupInput('Dodaj', drzewo)))
@@ -260,12 +260,13 @@ def popupInput(s, drzewo):
     elif s == 'Usun':
         if drzewo.wyszukaj(dane):
             drzewo.usun(int(dane))
-            messagebox.showinfo('Sukces','Poprawnie usunięto wezel')
+            messagebox.showinfo('Sukces','Poprawnie usunieto wezel')
         else:
             messagebox.showerror('Error', 'Nie ma takiego wezla')
     elif s == 'Wyszukaj':
         if drzewo.wyszukaj(int(dane)):
-            messagebox.showinfo('Sukces','Węzeł znajduje się w drzewie')
+            messagebox.showinfo('Sukces','Wezel znajduje sie w drzewie')
+
         else:
             messagebox.showerror('Error', 'Nie ma takiego wezla')
 
