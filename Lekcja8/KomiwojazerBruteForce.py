@@ -13,6 +13,7 @@ for i in range(totalCities):
     cities.append((random.randint(30,width),random.randint(40,height)))
 
 minimum = cities
+generation = 0
 
 def setup():
     pygame.init()
@@ -23,6 +24,7 @@ def setup():
     return window
 
 def draw(window, cities, minimum, x, y):
+    global generation
     window.fill(pygame.Color(0,0,0))
     white = pygame.Color(255,255,255)
     for i in range(len(minimum)):
@@ -34,8 +36,8 @@ def draw(window, cities, minimum, x, y):
 
     minimum = findNewMin(minimum, cities)
     text(window, white, 'Current distance: ' + str("%.2f" % calcDistance(minimum)), 5, 5)
-    text(window, white, 'Current generation: ' + str(y*totalCities + x), 5, 35)
-
+    text(window, white, 'Current generation: ' + str(generation), 5, 35)
+    generation += 1
     swap(x,y,cities)
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
@@ -67,9 +69,14 @@ def findNewMin(minimum, cities):
         return cities
     return minimum
 
+def Recurse(y, number):
+   if (number > 1):
+      Recurse(y, number - 1)
+   else:
+      for x in range(y):
+        draw(window, cities, minimum, x, y)
+
 window = setup()
 while True:
     for y in range(totalCities):
-        for x in range(totalCities):
-            if x != y:
-                draw(window, cities, minimum, x, y)
+        Recurse(y, totalCities)
