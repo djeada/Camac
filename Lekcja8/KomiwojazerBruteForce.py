@@ -10,7 +10,9 @@ totalCities = 100
 cities = []
 
 for i in range(totalCities):
-    cities.append((random.randint(0,width),random.randint(0,height)))
+    cities.append((random.randint(30,width),random.randint(40,height)))
+
+minimum = cities
 
 def setup():
     pygame.init()
@@ -20,18 +22,21 @@ def setup():
     window.fill(pygame.Color(0,0,0))
     return window
 
-def draw(cities, window):
+def draw(window, cities, minimum, x, y):
     window.fill(pygame.Color(0,0,0))
     white = pygame.Color(255,255,255)
-    for i in range(len(cities)):
-            pygame.draw.circle(window, white, cities[i], 10)
-            if i != len(cities) - 1:
-                pygame.draw.line(window, white, cities[i], cities[i+1])
+    for i in range(len(minimum)):
+            pygame.draw.circle(window, white, minimum[i], 10)
+            if i != len(minimum) - 1:
+                pygame.draw.line(window, white, minimum[i], minimum[i+1])
             else:
-                pygame.draw.line(window, white, cities[len(cities)-1], cities[0])
+                pygame.draw.line(window, white, minimum[len(minimum)-1], minimum[0])
 
-    text(window, white, str(calcDistance(cities)))
-    swap(random.randint(0,len(cities)-1),random.randint(0,len(cities)-1),cities)
+    minimum = findNewMin(minimum, cities)
+    text(window, white, 'Current distance: ' + str("%.2f" % calcDistance(minimum)), 5, 5)
+    text(window, white, 'Current generation: ' + str(y*totalCities + x), 5, 35)
+
+    swap(x,y,cities)
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
             None
@@ -39,11 +44,11 @@ def draw(cities, window):
             pygame.quit()
     pygame.display.update()
 
-def text(window, color, text):
+def text(window, color, text,x, y):
     pygame.font.init()
-    myfont = pygame.font.SysFont('Calibri MS', 16)
+    myfont = pygame.font.SysFont('Calibri MS', 30)
     textsurface = myfont.render(text, False, color)
-    window.blit(textsurface,(0,0))
+    window.blit(textsurface,(x,y))
 
 def swap(i,j, tablica):
     temp = tablica[i]
@@ -57,6 +62,14 @@ def calcDistance(cities):
     suma +=  math.sqrt((cities[0][0]-cities[len(cities)-1][0])**2 + (cities[0][1]-cities[len(cities)-1][1])**2)
     return suma
 
+def findNewMin(minimum, cities):
+    if calcDistance(cities) < calcDistance(minimum):
+        return cities
+    return minimum
+
 window = setup()
 while True:
-    draw(cities,window)
+    for y in range(totalCities):
+        for x in range(totalCities):
+            if x != y:
+                draw(window, cities, minimum, x, y)
