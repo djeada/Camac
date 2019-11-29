@@ -1,4 +1,5 @@
 import random
+import matplotlib.pyplot as plt
 
 def random_char():
     if random.randint(1,2) % 3 == 0:
@@ -63,7 +64,7 @@ def fittest_guy(population):
             fittest = x
     return fittest
 
-def new_generation(population):
+def new_generation(population, fittest_guys, average_guys):
     matingPool = []
     for i in range(totalPopulation):
         for j in range(int(population[i].fitness * 100)):
@@ -76,6 +77,17 @@ def new_generation(population):
         child.mutate(mutationRate)
         population[i] = child
         population[i].calcFitness(target)
+    fittest_guys.append(fittest_guy(population).fitness)
+    average_guys.append(average_fitness(population))
+
+def visualize(generations, fittest_guys, average_guys):
+    n = [i for i in range(generations)]
+    plt.title('Average/Fittest guys vs Generation')
+    plt.plot(n, fittest_guys, 'b-', color='green')
+    plt.plot(n, average_guys, 'b-', color='blue')
+    plt.xlabel('Generation')
+    plt.ylabel('Average/Fittest guys')
+    plt.show()
 
 mutationRate = 0.01
 totalPopulation = 150
@@ -89,10 +101,13 @@ for i in range(totalPopulation):
     population[i].calcFitness(target)
 
 generation = 0
+fittest_guys = []
+average_guys = []
 
 while listToString(fittest_guy(population).genes) != target:
-    new_generation(population)
-    generation += 1
+    new_generation(population, fittest_guys, average_guys)
     print('Current generation: ', generation)
     print(listToString(fittest_guy(population).genes))
+    generation += 1
+visualize(generation, fittest_guys, average_guys)
 
