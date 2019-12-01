@@ -9,7 +9,7 @@ class Kopiec():
 
     def wstaw(self, item):
         if self.czyPelny():
-            print("Kopiec jest przepełniony")
+            print("Kopiec jest przepelniony")
             return
 
         self.aktualnaPozycja = self.aktualnaPozycja + 1
