@@ -11,10 +11,10 @@ height = 700
 N = 3
 box_width = width//N
 box_height = height//N
-board = [['','',''],['','',''],['','','']]
+board = [['' for x in range(N)] for x in range(N)]
+number_of_moves = 0
 ai = 'X'
 human = 'O'
-flag = 1
 
 def setup():
     pygame.init()
@@ -23,13 +23,6 @@ def setup():
     window.set_alpha(None)
     window.fill(black)
     return window
-
-def draw_board(window):
-    for i in range(N-1):
-        pygame.draw.line(window, white, (0,(i+1)*box_height), (width,(i+1)*box_height),3)
-
-    for i in range(N-1):
-        pygame.draw.line(window, white, ((i+1)*box_width,0), ((i+1)*box_width,height),3)
 
 def text(window, text,x, y):
     pygame.font.init()
@@ -51,25 +44,38 @@ def draw(window, board):
         if event.type == pygame.MOUSEBUTTONUP:
             x, y = pygame.mouse.get_pos()
             humanMove(x,y)
+            global number_of_moves
+            number_of_moves += 1
+            if number_of_moves == N*N:
+                endScreen(window, 'None') 
             result = checkWinner()
             if not result:
                 aiMove()
+                number_of_moves += 1
+                result = checkWinner()
+                if result:
+                    endScreen(window, result) 
             else:
                 endScreen(window, result) 
         if event.type == pygame.QUIT:
             pygame.quit()
     pygame.display.update()
 
-
 def endScreen(window, result):
     while True:
         window.fill(black)
-        text(window, result, width//2, height//2)
+        text(window, result, int(0.6*width//2), height//2)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
         pygame.display.update()
 
+def draw_board(window):
+    for i in range(N-1):
+        pygame.draw.line(window, white, (0,(i+1)*box_height), (width,(i+1)*box_height),3)
+    for i in range(N-1):
+        pygame.draw.line(window, white, ((i+1)*box_width,0), ((i+1)*box_width,height),3)
+        
 def drawCharachter(window, charachter, x, y):
     if charachter == 'X':
         pygame.draw.line(window, white, (x,y), (x+int(0.6*box_width), y+int(0.6*box_height)), 5)
@@ -90,7 +96,7 @@ def aiMove():
         for j in range(N):
             if not board[i][j]:
                 board[i][j] = ai
-                score = minimax(board, 0 , False)
+                score = minimax(board, 0 , True)
                 board[i][j] = ''
                 bestScore = max(bestScore, score)
                 bestMove = (i, j)
@@ -106,7 +112,6 @@ def minimax(board, depth, isMax):
                     score = minimax(board, depth+1, False)
                     board[i][j] = ''
                     bestScore = max(score,bestScore)
-        return bestScore
     else:
         bestScore = float('inf')
         for i in range(N):
@@ -116,7 +121,7 @@ def minimax(board, depth, isMax):
                     score = minimax(board, depth+1, True)
                     board[i][j] = ''
                     bestScore = min(score,bestScore)
-        return bestScore
+    return bestScore
         
 def checkWinner():
     #horizontal
@@ -133,11 +138,6 @@ def checkWinner():
     if(board[2][0] == board[1][1] == board[0][2]):
         return board[2][0]
 
-'''
-def mousePressed():
-    if currentPlayer == human:
-'''
-    
 window = setup()
 while True:
     draw(window, board)
