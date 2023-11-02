@@ -36,4 +36,4 @@ Zachęcamy wszystkich studentów do aktywnego uczestnictwa w życiu Koła oraz d
 
 ## Licencja
 
-Materiały zawarte w repozytorium są dostępne na licencji [MIT](LICENSE), co oznacza, że możesz je wykorzystywać, modyfikować i rozpowszechniać z zachowaniem tej samej licencji.
+Materiały zawarte w tym repozytorium są udostępnione na warunkach licencji [GNU General Public License v2.0](LICENSE.txt). Oznacza to, że możesz swobodnie korzystać, modyfikować i rozpowszechniać te materiały, pod warunkiem zachowania tej samej licencji i zgodności z jej postanowieniami. Pełny tekst licencji znajduje się w pliku LICENSE w głównym katalogu repozytorium.
