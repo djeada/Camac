@@ -1,0 +1,26 @@
+## Podstawowe Operacje na Drzewie BST
+
+- Zaimplementuj funkcje do wstawiania elementow w drzewie BST.
+- Zaimplementuj funkcje do wyszukiwania elementow w drzewie BST.
+- Zaimplementuj funkcje do usuwania elementow z drzewa BST.
+- Dodaj funkcje, ktora zwraca najmniejszy i najwiekszy element w drzewie.
+
+## Przechodzenie Drzewa
+
+- Napisz funkcje realizujace przechodzenie drzewa (in-order, pre-order, post-order).
+- Napisz funkcje, ktora wyswietla wszystkie elementy drzewa na roznych poziomach.
+
+## Sprawdzanie Poprawnosci Drzewa BST
+
+- Napisz funkcje, ktora sprawdzi, czy dane drzewo binarne jest drzewem BST.
+- Rozszerz funkcje z punktu 3.1, aby zwracala rowniez najwieksza i najmniejsza wartosc w drzewie.
+
+## Balansowanie Drzewa
+
+- Zapoznaj sie z koncepcja drzew AVL i Zaimplementuj funkcje do rotacji (LL, LR, RR, RL).
+- Zaimplementuj funkcje, ktora automatycznie zbalansuje drzewo BST (zamieni to na drzewo AVL).
+
+## Zastosowania Drzew
+
+- Rozwaz, jakie moga byc praktyczne zastosowania drzew w rzeczywistych systemach informatycznych.
+- Zaproponuj wlasny projekt systemu, ktory bedzie korzystal z struktury drzew.

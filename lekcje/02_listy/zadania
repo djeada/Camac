@@ -1,0 +1,49 @@
+## System Zarzadzania Ksiazkami Biblioteki PW
+
+Zostales zatrudniony przez biblioteke Politechniki Warszawskiej do stworzenia systemu przechowujacego informacje o ksiazkach. Zdecydowales sie zrealizowac swoj system przy uzyciu listy polaczonej. Opracuj kod, ktory bedzie zawieral nastepujace funkcje:
+
+### 1. Inicjalizacja Listy
+- Tworzenie obiektow reprezentujacych dana liste.
+
+### 2. Dodawanie Elementow
+- Dodawanie nowych elementow na koniec listy.
+- Dodawanie nowych elementow na okreslona pozycje.
+- Kazdy element powinien zawierac informacje o:
+  - Tytule ksiazki
+  - Ilosci stron
+  - Autorze (nowo dodane)
+  - Roku wydania (nowo dodane)
+
+### Operacje na Elementach
+- Sprawdzanie dlugosci listy.
+- Wyswietlanie elementow listy.
+- Usuwanie elementow z listy:
+  - Poprzez podanie indeksu
+  - Poprzez podanie tytulu
+  - Poprzez podanie ilosci stron
+
+### 4. Analiza Listy
+- Znajdowanie najdluzszej i najkrotszej ksiazki.
+- Znajdowanie wszystkich ksiazek danego autora (nowo dodane).
+- Sprawdzanie, czy lista jest palindromem.
+- Znajdowanie wszystkich palindromow w liscie.
+
+### 5. Sortowanie i Czyszczenie Listy
+- Sortowanie listy z opcjami:
+  - Wzgledem tytulow ksiazek
+  - Wzgledem ilosci stron
+  - Wzgledem roku wydania (nowo dodane)
+- Wybor sortowania rosnacego lub malejacego.
+- Do wyboru dowolny algorytm sortujacy (zaleca sie uzycie sortowania przez scalanie).
+- Usuwanie duplikatow z listy.
+
+## Klonowanie Listy z Losowymi Polaczeniami
+
+**Zadanie dla najzdolniejszych dzieci.**
+
+Otrzymales liste z losowymi polaczeniami (patrz zalaczony rysunek). Twoim zadaniem jest sklonowac te liste, zachowujac oryginalne polaczenia. 
+
+**Kryteria Oceny:**
+- **Rozwiazanie Akceptowalne**: zlozonosc czasowa O(n) i zlozonosc pamieciowa O(n).
+- **Rozwiazanie dla Masterow**: zlozonosc czasowa O(n) i zlozonosc pamieciowa O(1).
+

@@ -1,0 +1,29 @@
+## Zrozumienie Podstaw
+
+- Zdefiniuj i wyjasnij, co to jest Transformata Fouriera, podajac jej zastosowania praktyczne.  
+- Wymien i opisz wlasciwosci Transformaty Fouriera.  
+
+## Analiza Sygnalow
+
+- Stworz rozne typy sygnalow (sinusoidalny, prostokatny, trojkatny) uzywajac Pythona i zilustruj ich Transformate Fouriera.  
+- Zastosuj filtracje w dziedzinie czestotliwosci, aby usunac szum z zaszumionego sygnalu.
+
+## Dyskretna Transformata Fouriera (DFT)
+
+- Zaimplementuj algorytm DFT od zera i uzyj go do analizy prostego sygnalu.  
+- Porownaj wyniki swojej implementacji DFT z wynikami funkcji bibliotecznych (np. `numpy.fft.fft`).  
+
+## Szybka Transformata Fouriera (FFT)
+
+- Zrozum i zaimplementuj algorytm FFT.  
+- Przygotuj skrypt ilustrujacy roznice w wydajnosci miedzy DFT a FFT.
+
+## Praktyczne Zastosowania
+
+- Przedstaw praktyczny przypadek uzycia Transformaty Fouriera (np. w przetwarzaniu obrazow, analizie muzycznej).  
+- Stworz projekt, ktory demonstruje wybrany praktyczny przypadek uzycia Transformaty Fouriera.
+
+## Pytania Teoretyczne
+
+- Wyjasnij, dlaczego FFT jest efektywniejsza niz DFT z punktu widzenia obliczeniowego.  
+- Zdefiniuj i wyjasnij znaczenie 'spektrum amplitudowego' i 'spektrum fazowego'.

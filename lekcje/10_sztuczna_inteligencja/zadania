@@ -1,0 +1,11 @@
+## Uczenie Maszynowe
+- Opisz i zaimplementuj podstawowy algorytm uczenia maszynowego.
+- Analiza przypadku: Wybierz jeden znany algorytm AI i dokladnie go przeanalizuj.
+
+## Minimax
+- Zaimplementuj algorytm Minimax w kontekscie prostej gry planszowej (np. kolko i krzyzyk).
+- Jakie sa ograniczenia algorytmu Minimax i jak mozna je przezwyciezyc?
+
+## A*
+- Zaimplementuj algorytm A* w kontekscie problemu szukania sciezki na siatce 2D.
+- Analiza przypadku: Jak algorytm A* moze byc zastosowany w rzeczywistym problemie (np. robotyka)?

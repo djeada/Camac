@@ -1,0 +1,25 @@
+## Przechodzenie Drzewa
+1. Zaimplementuj algorytmy przeszukiwania:
+   - Pre-order
+   - In-order
+   - Post-order
+   - Poziomowe (Breadth-First)
+2. Dla danego drzewa, zastosuj wszystkie powyzsze metody traversal i porownaj wyniki.
+
+## Drzewa AVL
+1. Zaimplementuj funkcje wstawiania w drzewie AVL, pamietajac o rotacjach.
+2. Napisz funkcje usuwajaca wezel z drzewa AVL i przywracajaca rownowage poprzez rotacje.
+3. Zaimplementuj wszystkie cztery rodzaje rotacji: LL, RR, LR i RL.
+4. Dany jest ciag liczb. Wstaw je do drzewa AVL i pokaz wszystkie kroki (wstawianie i rotacje) na przykladzie.
+
+## Analiza
+1. Jakie sa glowne roznice miedzy drzewem BST a AVL? 
+2. Jakie sa wady i zalety korzystania z drzew AVL nad standardowym drzewem BST?
+3. Wyjasnij, dlaczego rotacje sa kluczowe dla dzialania drzew AVL.
+4. W jakich przypadkach lepiej uzyc innych struktur drzew, takich jak drzewa czerwono-czarne czy drzewa B, zamiast drzew AVL?
+
+## Dodatkowe
+1. Zaimplementuj drzewo czerwono-czarne i porownaj jego wydajnosc z drzewem AVL przy wstawianiu, usuwaniu i przeszukiwaniu.
+2. Zaimplementuj drzewo B i przedstaw przyklady jego dzialania dla roznych wartosci t.
+3. Dla danego drzewa BST, napisz funkcje konwertujaca je na zbalansowane drzewo AVL.
+4. Zastanow sie, jak zaimplementowac operacje scalania dwoch drzew BST w jedno, zachowujac wlasnosci BST.

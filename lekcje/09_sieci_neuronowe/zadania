@@ -1,0 +1,23 @@
+## Praktyczna Implementacja Neuronu
+- Zaprojektuj i zaimplementuj prosty model neuronu uzywajac Pythona.
+- Wyjasnij, jak model neuronu moze byc uzywany do przewidywania wynikow na podstawie danych wejsciowych.
+
+## Eksploracja Funkcji Aktywacji
+- Zaimplementuj rozne funkcje aktywacji (takie jak ReLU, sigmoid, tanh) i zilustruj ich dzialanie na roznych danych wejsciowych.
+- Przeprowadz eksperyment porownujacy te funkcje aktywacji w kontekscie treningu prostego modelu sieci neuronowej.
+
+## Praktyczne Zastosowania Sieci Neuronowych
+- Wybierz konkretny problem (np. klasyfikacja obrazow lub analiza sentymentu) i zaimplementuj rozwiazanie uzywajac sieci neuronowej.
+- Sprobuj roznych architektur sieci neuronowych i porownaj ich wydajnosc.
+
+## Optymalizacja Sieci Neuronowej
+- Przeprowadz serie eksperymentow z roznymi algorytmami optymalizacyjnymi (jak Gradient Descent, Adam) na prostym modelu sieci neuronowej.
+- Analizuj, jak wybor algorytmu optymalizacyjnego wplywa na szybkosc zbieznosci i ostateczna wydajnosc modelu.
+
+## Strategie Zapobiegania Nadmiernemu Dopasowaniu
+- Zaimplementuj rozne techniki regularyzacji (takie jak dropout lub regularyzacja L2) w modelu sieci neuronowej.
+- Przeprowadz eksperymenty pokazujace, jak te strategie moga pomoc w zapobieganiu nadmiernemu dopasowaniu.
+
+## Implementacja Algorytmu Propagacji Wstecznej
+- Zaimplementuj algorytm propagacji wstecznej od podstaw, bez korzystania z gotowych bibliotek.
+- Sprobuj zastosowac swoj algorytm do trenowania prostej sieci neuronowej na zestawie danych.

@@ -1,0 +1,24 @@
+## Podstawy Grafow
+
+- Zdefiniuj i zilustruj roznice miedzy grafem skierowanym a nieskierowanym.
+- Wymien i zilustruj trzy rozne reprezentacje grafu (np. macierz sasiedztwa, lista sasiedztwa).
+- Jakie sa roznice miedzy grafem wazonym a niewazonym? Daj przyklady.
+
+## Przeszukiwanie Grafu
+
+- Zaimplementuj algorytm przeszukiwania wszerz (BFS) dla danego grafu.
+- Zaimplementuj algorytm przeszukiwania w glab (DFS) dla danego grafu.
+- Jakie sa glowne roznice miedzy algorytmami BFS i DFS?
+
+## Najkrotsze Sciezki
+
+- Zaimplementuj algorytm Dijkstry i znajdz najkrotsza sciezke miedzy dwoma wierzcholkami w grafie wazonym.
+- Zaimplementuj algorytm Bellman-Ford i porownaj jego efektywnosc z algorytmem Dijkstry.
+- Jak algorytm Floyd-Warshall moze znalezc najkrotsze sciezki miedzy wszystkimi parami wierzcholkow? 
+
+## Cykle i Drzewa Rozpinajace
+
+- Zaimplementuj funkcje, ktora znajdzie wszystie cykle w danym grafie .
+- Zaimplementuj algorytm Kruskala do znalezienia minimalnego drzewa rozpinajacego dla danego grafu.
+- Zaimplementuj algorytm Prima do znalezienia minimalnego drzewa rozpinajacego i porownaj go z algorytmem Kruskala.
+

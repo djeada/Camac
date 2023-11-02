@@ -1,0 +1,40 @@
+
+## Podstawy Tablic z Haszowaniem
+
+1. Wyjasnij, jak dziala tablica z haszowaniem.
+2. Jakie sa zalety i wady uzywania tablic z haszowaniem?
+3. Jakie strategie mozna zastosowac, aby zminimalizowac kolizje w tablicach z haszowaniem?
+
+## Funkcje Haszujace
+
+1. Co to jest funkcja haszujaca i jakie powinna posiadac wlasciwosci?
+2. Omow rozne metody konstruowania funkcji haszujacych.
+3. Dlaczego funkcje haszujace sa wazne w informatyce, szczegolnie w kontekscie struktur danych i kryptografii?
+
+## Implementacja Tablicy z Haszowaniem
+
+Zaprojektuj i zaimplementuj prosta tablice z haszowaniem z otwartym adresowaniem. Twoja implementacja powinna umozliwiac:
+1. Dodawanie elementow do tablicy.
+2. Usuwanie elementow z tablicy.
+3. Wyszukiwanie elementow w tablicy.
+
+## Implementacja Funkcji Haszujacej
+
+Zaimplementuj funkcje haszujaca, spelniajaca nastepujace kryteria:
+1. Rownomierny rozklad wartosci haszowych.
+2. Odpornosc na kolizje (tzn. rozne wejscia powinny generowac rozne wartosci haszowe, w miare mozliwosci).
+3. Szybkie obliczenia haszu.
+
+## Analiza Wydajnosci
+
+Przeprowadz analize wydajnosci twojej tablicy z haszowaniem i funkcji haszujacej, sprawdzajac:
+1. Jak szybko dzialaja operacje dodawania, usuwania i wyszukiwania w roznych warunkach (np. rozna ilosc elementow, rozne rozmiary tablic).
+2. Jak czesto wystepuja kolizje i jak wplywaja na wydajnosc twojej struktury danych.
+
+## Rozwiazania Kolizji
+
+Zaimplementuj i przetestuj rozne strategie rozwiazania kolizji (np. lancuchowy, otwarte adresowanie) i porownaj ich wydajnosc.
+
+## Zaprojektowanie Systemu z Uzyciem Tablic z Haszowaniem
+
+Zaprojektowanie systemu (np. system zarzadzania baza danych), w ktorym glownym komponentem jest tablica z haszowaniem, demonstrujac realne zastosowanie tej struktury danych w praktycznym projekcie informatycznym.

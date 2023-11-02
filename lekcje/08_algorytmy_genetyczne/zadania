@@ -1,0 +1,24 @@
+## Projekt algorytmu genetycznego
+   
+- Opracuj algorytm genetyczny do rozwiazania problemu optymalizacji funkcji kwadratowej.
+- Skonstruuj algorytm genetyczny do znalezienia najkrotszej sciezki w grafie.
+   
+## Analiza Operatorow
+
+- Wyjasnij, jak rozne operatory selekcji wplywaja na konwergencje algorytmu genetycznego.
+- Porownaj rozne metody krzyzowania (jednopunktowe, wielopunktowe, jednorodne) i zbadaj ich wplyw na roznorodnosc populacji.
+
+## Symulacje
+   
+- Przeprowadz symulacje procesu ewolucji za pomoca algorytmu genetycznego, obserwujac, jak zmienia sie przystosowanie populacji w kolejnych pokoleniach.
+- Uzyj roznych funkcji oceny i zbadaj, jak wplywaja na wyniki algorytmu genetycznego.
+
+## Implementacja i Optymalizacja
+
+- Zaimplementuj algorytm genetyczny w jezyku programowania po wyborze.
+- Optymalizuj parametry algorytmu genetycznego (takie jak prawdopodobienstwo mutacji, wielkosc populacji) dla konkretnego problemu.
+
+## Studium przypadku:
+   
+- Wybierz rzeczywisty problem optymalizacji i zastosuj do niego algorytm genetyczny. Analizuj i dokumentuj proces oraz wyniki.
+- Opracuj studium przypadku, pokazujac zastosowanie algorytmow genetycznych w rozwiazaniu problemu w dziedzinie ekonomii lub medycyny.

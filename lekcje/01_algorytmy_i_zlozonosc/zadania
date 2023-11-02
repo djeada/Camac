@@ -1,0 +1,33 @@
+## Wstep do Problemu P vs NP
+
+1.1 Zidentyfikuj i zdefiniuj roznice miedzy problemami klasy P i NP.
+1.2 Podaj trzy przyklady problemow z klasy P oraz trzy z klasy NP.
+
+## Analiza Algorytmow
+
+2.1 Wybierz jeden algorytm sortowania (np. sortowanie babelkowe) i przeprowadz analize jego zlozonosci czasowej i pamieciowej.
+   
+2.2 Przygotuj diagram przedstawiajacy zaleznosc miedzy czasem wykonania a wielkoscia wejsciowa dla wybranego algorytmu sortowania.
+
+
+## Praktyczne Doswiadczenia z Algorytmami
+
+3.1 Zaprojektuj i zaimplementuj prosty algorytm z klasy P (np. wyszukiwanie binarne) w jezyku programowania twojego wyboru.
+
+3.2 Zaprojektuj i zaimplementuj prosty algorytm z klasy NP (np. problem komiwojazera) w jezyku programowania twojego wyboru.
+
+3.3 Porownaj zlozonosc czasowa i pamieciowa obu zaimplementowanych algorytmow, podsumowujac swoje obserwacje.
+
+
+## Problemy NP-Complete
+
+4.1 Wybierz jeden problem NP-Complete (np. problem plecakowy) i przedstaw jego formalna definicje oraz przyklad.
+   
+4.2 Sprobuj opracowac heurystyke, ktora moglaby znalezc przyblizone rozwiazanie wybranego problemu NP-Complete w rozsadnym czasie.
+
+
+## Impakt Rozwiazania Problemu P vs NP
+
+5.1 Przeprowadz badanie literaturowe, aby zrozumiec potencjalne implikacje rozwiazania problemu P vs NP dla roznych dziedzin (np. kryptografia, optymalizacja).
+   
+5.2 Opracuj krotki raport przedstawiajacy twoje wnioski na temat tego, jak rozwiazanie problemu P vs NP mogloby wplynac na swiat informatyki i matematyki.
